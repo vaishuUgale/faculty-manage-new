@@ -1,4 +1,45 @@
-
+<?php
+session_start();
+include("./conn.php");
+include("./functions.php");
+if (!isset($_SESSION['username'])) {
+    echo '<script>window.location.href="login.php"</script>';
+  }
+  $workshopatt=$_SESSION['user_id'];
+  $workshopattADDEDbY=$_SESSION['user_id'];
+  if($_SERVER['REQUEST_METHOD']   == 'POST')
+  {
+          // success!
+          if ($_SESSION['role'] == 'admin') {
+               $workshopatt= $mysqli->real_escape_string($_POST['workshopatt']);
+          }
+               $workshopname= $mysqli->real_escape_string($_POST['workshopname']);
+               $fromdate= $mysqli->real_escape_string($_POST['fromdate']);
+               
+               $todate= $mysqli->real_escape_string($_POST['todate']);
+               $level= $mysqli->real_escape_string($_POST['level']);
+                
+  
+   $sql= "INSERT INTO `wsatt`(`workshopatt`, `workshopname`, `fromdate`, `todate`, `level`,`wsatt_added_by`,`wsatt_user_id`) 
+   VALUES('$workshopatt','$workshopname','$fromdate','$todate','$level','$workshopattADDEDbY','$workshopatt');";
+  
+                if($mysqli->query($sql)== true)
+                {
+                  $last_id = $mysqli->insert_id;
+  
+                  genID($last_id,'wsatt','wsatt_id','wsatt');
+                  alert("success");
+  
+                }
+  
+               else {
+                      // failed 
+                      alert("unsuccessful");
+  
+  
+                    }
+  }
+  ?>
 <!doctype html>
 <html lang="en">
 
@@ -22,16 +63,27 @@
     <div class="box">
         <h1>Workshop Attended</h1>
     </div>
-    
+    <form action="" method="post">
     <div class="wrapper">
         <div class="container">
             <div class="mb-3">
-                <label class="form-label">Name of Faculty :</label>
-                <select class="form-control" name="workshopatt">
-                    <option value="option 1">option 1</option>
-                    <option value="option 2">option 2</option>
-                    <option value="option 3">option 3</option>
-                </select>
+            <?php
+                if ($_SESSION['role'] == 'admin') {
+                    $users_q = mysqli_query($mysqli, "select * from users");
+
+                ?>
+                    <label class="form-label">Name of Faculty :</label>
+                    <select class="form-control" name="workshopatt">
+                        <option disabled selected value="def">Select Faculty</option>
+                        <?php
+                        while ($users = mysqli_fetch_assoc($users_q)) {
+                            echo "<option value='" . $users['user_id'] . "'>" . $users['username'] . "</option>";
+                        }
+                        ?>
+                    </select>
+                <?php
+
+                } ?>
             </div>
             <div class="mb-3">
                 <label class="form-label">Workshop Name :</label>
@@ -62,6 +114,7 @@
             </div>
         </div>
     </div>
+    </form>
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: Bootstrap Bundle with Popper -->

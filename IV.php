@@ -1,4 +1,35 @@
+<?php
+session_start();
+include("./conn.php");
+include("./functions.php");
+if (!isset($_SESSION['username'])) {
+    echo '<script>window.location.href="login.php"</script>';
+  }
+  $ivorg = $_SESSION['user_id'];
+  $ivorgAdded = $_SESSION['user_id'];
 
+  if ($_SERVER['REQUEST_METHOD']   == 'POST') {
+    // success!
+    if ($_SESSION['role'] == 'admin') {
+      $ivorg = $mysqli->real_escape_string($_POST['ivorg']);
+    }
+    $Place = $mysqli->real_escape_string($_POST['Place']);
+    $date = $mysqli->real_escape_string($_POST['fromdate']);
+    $level = $mysqli->real_escape_string($_POST['level']);
+    $description = $mysqli->real_escape_string($_POST['description']);
+  
+    $sql = "INSERT INTO `iv`(`ivorg`, `Place`, `date`,`level`,`description`,`iv_added_by`,`iv_user_id`) 
+   VALUES('$ivorg','$Place','$date','$level','$description','$ivorgAdded','$ivorg');";
+  
+    if ($mysqli->query($sql) == true) {
+      alert("success");
+    } else {
+      // failed 
+  
+      alert("unsuccess");
+    }
+  }
+  ?>
 <!doctype html>
 <html lang="en">
 
@@ -22,16 +53,28 @@
     <div class="box">
         <h1>Industrial Visit Organised By</h1>
     </div>
-    
+    <form action="" method="post">
+
     <div class="wrapper">
         <div style="height: 570px" class="container">
             <div class="mb-3">
-                <label class="form-label">Name of Faculty :</label>
-                <select class="form-control" name="ivorg">
-                    <option value="option 1">option 1</option>
-                    <option value="option 2">option 2</option>
-                    <option value="option 3">option 3</option>
-                </select>
+            <?php
+                if ($_SESSION['role'] == 'admin') {
+                    $users_q = mysqli_query($mysqli, "select * from users");
+
+                ?>
+                    <label class="form-label">Name of Faculty :</label>
+                    <select class="form-control" name="ivorg">
+                        <option disabled selected value="def">Select Faculty</option>
+                        <?php
+                        while ($users = mysqli_fetch_assoc($users_q)) {
+                            echo "<option value='" . $users['user_id'] . "'>" . $users['username'] . "</option>";
+                        }
+                        ?>
+                    </select>
+                <?php
+
+                } ?>
             </div>
             <div class="mb-3">
                 <label class="form-label">Place :</label>
@@ -39,7 +82,7 @@
             </div>
             <div class="mb-3">
                 <label class="form-label">Date :</label><br>
-                     <input type="date" class="form-control" name="date">
+                     <input type="date" class="form-control" name="fromdate">
             </div>
             <div class="mb-3">
                 <label class="form-label">Class :</label>
@@ -61,6 +104,7 @@
             </div>
         </div>
     </div>
+    </form>
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
