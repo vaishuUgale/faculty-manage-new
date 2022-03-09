@@ -1,4 +1,37 @@
+<?php
+  
+session_start();
+echo '<pre>' . print_r($_SESSION, TRUE) . '</pre>';
 
+$mysqli = new mysqli('localhost','root' ,'', 'accounts' );
+if(isset($_POST['Submit']))
+{
+$username = trim($_POST['username']);
+$password = trim($_POST['password']);
+$query = "SELECT * FROM users WHERE username='$username' 
+AND password='$password'";
+
+$result = mysqli_query($mysqli,$query)or die(mysqli_error($mysql));
+$num_row = mysqli_num_rows($result);
+$row=mysqli_fetch_array($result);
+if( $num_row ==1 )
+     {
+        //  var_dump($row);
+ $_SESSION['user_id']=$row['user_id'];
+ $_SESSION['username']=$row['username'];
+ $_SESSION['email']=$row['email'];
+ $_SESSION['role']=$row['role'];
+ $_SESSION['user_added_by']=$row['user_added_by'];
+ echo '<script>window.location.href="Home.php"</script>';
+ exit;
+  }
+  else
+     {
+ echo 'oops  can not do it';
+  }
+ }
+
+?>
 <!doctype html>
 <html lang="en">
 
@@ -22,7 +55,7 @@
     <div class="box">
         <h1>Login</h1>
     </div>
-    
+    <form action="" method="post">
     <div class="wrapper">
         <div style="height: 350px" class="container">
             <div class="mb-3">
@@ -47,6 +80,7 @@
             </div>
         </div>
     </div>
+    </form>
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
