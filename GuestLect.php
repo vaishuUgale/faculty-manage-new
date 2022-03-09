@@ -1,4 +1,44 @@
+<?php
+session_start();
+include("./conn.php");
+include("./functions.php");
+if (!isset($_SESSION['username'])) {
+    echo '<script>window.location.href="login.php"</script>';
+  }
+  $glorg=$_SESSION['user_id'];
+  $glorgAddedBy=$_SESSION['user_id'];
 
+  if($_SERVER['REQUEST_METHOD']   == 'POST')
+  {
+          // success!
+          if ($_SESSION['role'] == 'admin') {
+               $glorg= $mysqli->real_escape_string($_POST['glorg']);
+          }
+               $glname= $mysqli->real_escape_string($_POST['glname']);
+               $date= $mysqli->real_escape_string($_POST['date']);
+               
+               $level= $mysqli->real_escape_string($_POST['level']);
+                
+  
+   $sql= "INSERT INTO `guestlect`(`glorg`, `glname`, `date`,`level`, `guestlect_user_id`,`guestlect_added_by`) 
+   VALUES('$glorg','$glname','$date','$level','$glorg','$glorgAddedBy');";
+  
+                if($mysqli->query($sql)== true)
+                {
+                  $last_id = $mysqli->insert_id;
+  
+                  genID($last_id,'guestlect','guestlect_id','guestlect');
+                  alert("success"); 
+                }
+  
+               else {
+                      // failed 
+  
+                      alert("unsuccessful"); 
+  
+                    }
+  }
+  ?>
 <!doctype html>
 <html lang="en">
 
@@ -22,16 +62,28 @@
     <div class="box">
         <h1>Guest Lecture Organised By</h1>
     </div>
-    
+    <form action="" method="post">
+
     <div class="wrapper">
         <div style="height: 490px" class="container">
             <div class="mb-3">
-                <label class="form-label">Name of Faculty :</label>
-                <select class="form-control" name="glorg">
-                    <option value="option 1">option 1</option>
-                    <option value="option 2">option 2</option>
-                    <option value="option 3">option 3</option>
-                </select>
+            <?php
+                if ($_SESSION['role'] == 'admin') {
+                    $users_q = mysqli_query($mysqli, "select * from users");
+
+                ?>
+                    <label class="form-label">Name of Faculty :</label>
+                    <select class="form-control" name="glorg">
+                        <option disabled selected value="def">Select Faculty</option>
+                        <?php
+                        while ($users = mysqli_fetch_assoc($users_q)) {
+                            echo "<option value='" . $users['user_id'] . "'>" . $users['username'] . "</option>";
+                        }
+                        ?>
+                    </select>
+                <?php
+
+                } ?>
             </div>
             <div class="mb-3">
                 <label class="form-label">Topic Name :</label>
@@ -57,6 +109,7 @@
             </div>
         </div>
     </div>
+    </form>
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: Bootstrap Bundle with Popper -->

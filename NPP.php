@@ -1,4 +1,44 @@
+<?php
+session_start();
+include("./conn.php");
+include("./functions.php");
+if (!isset($_SESSION['username'])) {
+    echo '<script>window.location.href="login.php"</script>';
+  }
+  $user_id = $_SESSION['user_id'];
 
+  if($_SERVER['REQUEST_METHOD']   == 'POST')
+{
+        // success!
+             $Author1= $mysqli->real_escape_string($_POST['Author1']);
+             $Author2= $mysqli->real_escape_string($_POST['Author2']);
+             $PaperTitle= $mysqli->real_escape_string($_POST['PaperTitle']);
+             
+             $JournalName= $mysqli->real_escape_string($_POST['JournalName']);
+             $DOP= $mysqli->real_escape_string($_POST['DOP']);
+              $Volume= $mysqli->real_escape_string($_POST['Volume']);
+              $Pagenos= $mysqli->real_escape_string($_POST['Pagenos']);
+              $DOI= $mysqli->real_escape_string($_POST['DOI']);
+
+
+ $sql= "INSERT INTO `npaperpublication`(`Author1`, `Author2`, `PaperTitle`, `JournalName`, `DOP`, `Volume`, `Pagenos`, `DOI`,`npaperpublication_added_by`
+ ,`npaperpublication_user_id`)
+  VALUES('$Author1','$Author2','$PaperTitle','$JournalName','$DOP','$Volume','$Pagenos','$DOI','$user_id','$user_id');";
+
+              if($mysqli->query($sql)== true)
+              {
+                alert("Successfully Inserted");
+                
+              }
+
+             else {
+                    // failed 
+
+                    alert("Unsuccessful");
+
+                  }
+}
+  ?>
 <!doctype html>
 <html lang="en">
 
@@ -22,16 +62,17 @@
     <div class="box">
         <h1>National Level Paper Publication</h1>
     </div>
-    
+    <form action="" method="post">
+
     <div class="wrapper">
         <div style="height: 820px" class="container">
             <div class="mb-3">
                 <label class="form-label">Author 1 :</label>
-                <input type="text" class="form-control" name= "Author 1" >
+                <input type="text" class="form-control" name= "Author1" >
             </div>
             <div class="mb-3">
                 <label class="form-label">Author 2 :</label>
-                <input type="text" class="form-control" name= "Author 2" >
+                <input type="text" class="form-control" name= "Author2" >
             </div>
             <div class="mb-3">
                 <label class="form-label">Paper Title :</label>
@@ -55,7 +96,7 @@
             </div>
             <div class="mb-3">
                 <label class="form-label">DOI :</label>
-                <input type="text" class="form-control" name= "DIO" >
+                <input type="text" class="form-control" name= "DOI" >
             </div>
             <div class="mb-3">
                 <div class="cont-1">
@@ -65,6 +106,7 @@
             </div>
         </div>
     </div>
+    </form>
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: Bootstrap Bundle with Popper -->

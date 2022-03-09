@@ -1,4 +1,42 @@
+<?php
+session_start();
+include("./conn.php");
+include("./functions.php");
+if (!isset($_SESSION['username'])) {
+    echo '<script>window.location.href="login.php"</script>';
+  }
+  $user_id = $_SESSION['user_id'];
 
+  if($_SERVER['REQUEST_METHOD']   == 'POST')
+{
+        // success!
+             $Author1= $mysqli->real_escape_string($_POST['Author1']);
+             $Author2= $mysqli->real_escape_string($_POST['Author2']);
+             $PaperTitle= $mysqli->real_escape_string($_POST['PaperTitle']);
+             
+             $JournalName= $mysqli->real_escape_string($_POST['JournalName']);
+             $DOP= $mysqli->real_escape_string($_POST['DOP']);
+              $Volume= $mysqli->real_escape_string($_POST['Volume']);
+              $Pagenos= $mysqli->real_escape_string($_POST['Pagenos']);
+              $DOI= $mysqli->real_escape_string($_POST['DOI']);
+
+
+ $sql= "INSERT INTO `inpaperpublication`(`Author1`, `Author2`, `PaperTitle`, `JournalName`, `DOP`, `Volume`, `Pagenos`, `DOI`, `inpaperpublication_added_by`,`inpaperpublication_user_id`)
+  VALUES('$Author1','$Author2','$PaperTitle','$JournalName','$DOP','$Volume','$Pagenos','$DOI','$user_id','$user_id');";
+
+              if($mysqli->query($sql)== true)
+              {
+                alert("success");
+              }
+
+             else {
+                    // failed 
+
+                    alert("unsuccessful");
+
+                  }
+}
+  ?>
 <!doctype html>
 <html lang="en">
 
@@ -22,7 +60,8 @@
     <div class="box">
         <h1>International Level Paper Publication</h1>
     </div>
-    
+    <form action="" method="post">
+
     <div class="wrapper">
         <div style="height: 820px" class="container">
             <div class="mb-3">
@@ -65,6 +104,7 @@
             </div>
         </div>
     </div>
+    </form>
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
