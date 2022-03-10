@@ -8,6 +8,11 @@ include './functions.php';
 $user_id = $_SESSION['user_id'];
 
 $sql = "SELECT * FROM `iv` WHERE iv_user_id='$user_id'";
+if (isset($_GET['admin'])) {
+  if($_SESSION['role']=='admin') {
+  $sql="SELECT * FROM `iv`";
+  }
+}
 $query = mysqli_query($mysqli, $sql);
 ?>
 <!doctype html>

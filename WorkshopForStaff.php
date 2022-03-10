@@ -86,7 +86,7 @@ if (!isset($_SESSION['username'])) {
             </div>
             <div class="mb-3">
                 <label class="form-label">Workshop Name :</label>
-                <input type="text" class="form-control" name= "fdpname" placeholder="Workshop Name">
+                <input type="text" class="form-control" name= "workshopname" placeholder="Workshop Name">
             </div>
             <div class="mb-3">
                 <label class="form-label">Date :</label><br>

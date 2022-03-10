@@ -7,10 +7,10 @@ include './conn.php';
 include './functions.php';
 $user_id = $_SESSION['user_id'];
 
-$sql = "SELECT * FROM `inpaperpublication` WHERE inpaperpublication_user_id='$user_id'";
+$sql = "SELECT * FROM `wsorg` WHERE wsorg_user_id='$user_id'";
 if (isset($_GET['admin'])) {
   if($_SESSION['role']=='admin') {
-  $sql="SELECT * FROM `inpaperpublication`";
+  $sql="SELECT * FROM `wsorg`";
   }
 }
 $query = mysqli_query($mysqli, $sql);
@@ -27,49 +27,43 @@ $query = mysqli_query($mysqli, $sql);
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <link rel="stylesheet" href="tables.css">
 
-  <title>My International Research Paper Report</title>
+  <title>My Workshop Organised Report</title>
 </head>
 
 <body>
   <div class="box">
-    <h1>My International Research Paper Report</h1>
+    <h1>My Workshop Organised Report</h1>
   </div>
   <div class="container">
     <table class="table table-hover">
       <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">Author 1</th>
-          <th scope="col">Author 2</th>
-          <th scope="col">Paper Title</th>
-          <th scope="col">Name of Journal</th>
-          <th scope="col">Date of publication</th>
-          <th scope="col">Volume</th>
-          <th scope="col">No.of Pages</th>
-          <th scope="col">DOI</th>
-          <th scope="col">Submitted By</th>
+          <th scope="col">Name of Faculty</th>
+          <th scope="col">workshopname</th>
+          <th scope="col">From Date</th>
+          <th scope="col">To Date</th>
+          <th scope="col">Level</th>
+          <th scope="col">Added By</th>
         </tr>
       </thead>
       <tbody class="table-light">
         <?php
-        $i = 1;
+        $i=1;
         while ($row = mysqli_fetch_assoc($query)) {
-
+       
         ?>
           <tr>
             <th scope="row"><?php echo $i;  ?></th>
-            <td><?php echo $row['Author1']; ?></td>
-            <td><?php echo $row['Author2'] ?></td>
-            <td><?php echo $row['PaperTitle'] ?></td>
-            <td><?php echo $row['JournalName'] ?></td>
-            <td><?php echo $row['DOP'] ?></td>
-            <td><?php echo $row['Volume'] ?></td>
-            <td><?php echo $row['Pagenos'] ?></td>
-            <td><?php echo $row['DOI'] ?></td>
-            <td><?php echo get_Added_Name($row['inpaperpublication_user_id']); ?></td>
+           <td><?php echo get_Added_Name($row['wsorg_user_id']); ?></td>
+           <td><?php echo $row['workshopname'] ?></td>
+           <td><?php echo $row['fromdate'] ?></td>
+           <td><?php echo $row['todate'] ?></td>
+           <td><?php echo $row['level'] ?></td>
+           <td><?php echo get_Added_Name($row['wsorg_added_by']); ?></td>
           </tr>
         <?php
-          $i++;
+        $i++;
         }
         ?>
 

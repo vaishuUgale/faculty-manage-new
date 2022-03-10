@@ -59,8 +59,14 @@ if (!isset($_SESSION['username'])) {
                                             <li class="page_item page-item-2">
                                                 <a href="WorkshopForStaff.php">Workshop Orgnised For Staff </a>
                                             </li>
+                                            <li class="page_item page-item-1">
+                                                <a href="wrkForStafflist.php"> Workshop Orgnised List</a>
+                                            </li>
                                             <li class="page_item page-item-2">
                                                 <a href="WorkshopForStudent.php">Workshop Orgnised For Student </a>
+                                            </li>
+                                            <li class="page_item page-item-1">
+                                                <a href="wrkForStudlist.php"> Workshop Student List</a>
                                             </li>
                                         </ul>
                                     </li>
