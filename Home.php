@@ -42,6 +42,7 @@ if (!isset($_SESSION['username'])) {
                                     <li class="page_item page-item-2"><a href="form.php">Research Publication</a>
                                         <ul>
                                             <li class="page_item page-item-1"><a href="NPP.php"> National</a></li>
+                                            <li class="page_item page-item-1"><a href="resnat_list.php"> National list</a></li>
                                             <li class="page_item page-item-2"><a href="IPP.php">International</a></li>
                                         </ul>
                                     </li>
