@@ -26,6 +26,9 @@ if (!isset($_SESSION['username'])) {
 
               if($mysqli->query($sql)== true)
               {
+                $last_id = $mysqli->insert_id;
+  
+                genID($last_id,'inpaperpublication','inpaperpublication_id','inpaper');
                 alert("success");
               }
 

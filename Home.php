@@ -53,6 +53,9 @@ if (!isset($_SESSION['username'])) {
                                             <li class="page_item page-item-1">
                                                 <a href="Workshop_Attended.php"> Workshop Attended</a>
                                             </li>
+                                            <li class="page_item page-item-1">
+                                                <a href="wrkattendlist.php"> Workshop Attended List</a>
+                                            </li>
                                             <li class="page_item page-item-2">
                                                 <a href="WorkshopForStaff.php">Workshop Orgnised For Staff </a>
                                             </li>

@@ -14,6 +14,7 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
 }
 .box h1{
     font-size: 40px;
@@ -21,13 +22,19 @@ body{
     color: rgb(78, 74, 74);
 }
 .container{
-    height: 400px;
-    width: 800px;
-    display: flex;
-    align-items: center;
+    height: auto;
+    width: auto;
+    padding: 0 10px;
 }
 .table{
     background-color: rgb(253, 193, 63);
     height: 400px;
     border-radius: 30px;
 }
+
+@media screen and (max-width: 600px) {
+    .container{
+     
+        overflow-x: scroll;
+    }
+  }

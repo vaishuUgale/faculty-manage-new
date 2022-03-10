@@ -22,12 +22,12 @@ $query = mysqli_query($mysqli, $sql);
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <link rel="stylesheet" href="tables.css">
 
-  <title>My National Research Paper Report</title>
+  <title>My International Research Paper Report</title>
 </head>
 
 <body>
   <div class="box">
-    <h1>My National Research Paper Report</h1>
+    <h1>My International Research Paper Report</h1>
   </div>
   <div class="container">
     <table class="table table-hover">

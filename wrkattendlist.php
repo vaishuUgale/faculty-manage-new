@@ -7,7 +7,7 @@ include './conn.php';
 include './functions.php';
 $user_id = $_SESSION['user_id'];
 
-$sql = "SELECT * FROM `iv` WHERE iv_user_id='$user_id'";
+$sql = "SELECT * FROM `wsatt` WHERE wsatt_user_id='$user_id'";
 $query = mysqli_query($mysqli, $sql);
 ?>
 <!doctype html>
@@ -22,43 +22,43 @@ $query = mysqli_query($mysqli, $sql);
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <link rel="stylesheet" href="tables.css">
 
-  <title>Indrustrial visit Report</title>
+  <title>My Workshop attendence Report</title>
 </head>
 
 <body>
   <div class="box">
-    <h1>Indrustrial visit  Report</h1>
+    <h1>My Workshop attendence Report</h1>
   </div>
   <div class="container">
     <table class="table table-hover">
       <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">Organised By</th>
-          <th scope="col">Place</th>
-          <th scope="col">Date</th>
+          <th scope="col">Name of Faculty</th>
+          <th scope="col">workshopname</th>
+          <th scope="col">From Date</th>
+          <th scope="col">To Date</th>
           <th scope="col">Level</th>
-          <th scope="col">Description</th>
-          <th scope="col">Submitted By</th>
+          <th scope="col">Added By</th>
         </tr>
       </thead>
       <tbody class="table-light">
         <?php
-        $i = 1;
+        $i=1;
         while ($row = mysqli_fetch_assoc($query)) {
-
+       
         ?>
           <tr>
             <th scope="row"><?php echo $i;  ?></th>
-            <td><?php echo get_Added_Name($row['ivorg']); ?></td>
-            <td><?php echo $row['Place'] ?></td>
-            <td><?php echo $row['date'] ?></td>
-            <td><?php echo $row['level'] ?></td>
-            <td><?php echo $row['description'] ?></td>
-            <td><?php echo get_Added_Name($row['iv_user_id']); ?></td>
+           <td><?php echo get_Added_Name($row['wsatt_user_id']); ?></td>
+           <td><?php echo $row['workshopname'] ?></td>
+           <td><?php echo $row['fromdate'] ?></td>
+           <td><?php echo $row['todate'] ?></td>
+           <td><?php echo $row['level'] ?></td>
+           <td><?php echo get_Added_Name($row['wsatt_added_by']); ?></td>
           </tr>
         <?php
-          $i++;
+        $i++;
         }
         ?>
 
