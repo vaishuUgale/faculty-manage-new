@@ -44,6 +44,7 @@ if (!isset($_SESSION['username'])) {
                                             <li class="page_item page-item-1"><a href="NPP.php"> National</a></li>
                                             <li class="page_item page-item-1"><a href="resnat_list.php"> National list</a></li>
                                             <li class="page_item page-item-2"><a href="IPP.php">International</a></li>
+                                            <li class="page_item page-item-1"><a href="resinnat_list.php"> International list</a></li>
                                         </ul>
                                     </li>
 
@@ -64,11 +65,20 @@ if (!isset($_SESSION['username'])) {
                                         <a href="ConferenceAtt-By.php">Conference</a>
                                     </li>
                                     <li class="page_item page-item-3">
+                                        <a href="conference_list.php">Conference attendence List</a>
+                                    </li>
+                                    <li class="page_item page-item-3">
                                         <a href="GuestLect.php">Guest Lecture</a>
+                                    </li>
+                                    <li class="page_item page-item-3">
+                                        <a href="Guest_lec_list.php">Guest Lecture list</a>
                                     </li>
 
                                     <li class="page_item page-item-3">
                                         <a href="IV.php">Industrial Visit</a>
+                                    </li>
+                                    <li class="page_item page-item-3">
+                                        <a href="IV_list.php">Industrial Visit list</a>
                                     </li>
 
                                     <li class="page_item page-item-3"><a href="/mit/portal/index.php?r=site/#">Display</a>
