@@ -16,4 +16,30 @@ function alert($message)
     echo "<script>alert('$message')</script>";
 }
 
-?>
+// function get_user_Name($id){
+//     try {
+//     global $mysqli;
+//     $get_user_Name= mysqli_fetch_assoc(mysqli_query($mysqli,"SELECT * FROM `users` WHERE user_id='$id'"));
+//     return $get_user_Name['username'];
+// } 
+//     catch (\Throwable $th) {
+//        return " ";
+//     }
+// }
+function get_Added_Name($id){
+    if ($id!="") {
+        global $mysqli;
+        $get_Added_Name= mysqli_fetch_assoc(mysqli_query($mysqli,"SELECT * FROM `users` WHERE user_id='$id'"));  
+        if (isset($get_Added_Name['username'])) {
+            # code...
+            return $get_Added_Name['username'];
+        }  else{
+            return " ";
+        }
+
+    }else{
+        return " ";
+
+    }
+
+}

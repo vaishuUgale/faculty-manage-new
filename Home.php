@@ -32,7 +32,9 @@ if (!isset($_SESSION['username'])) {
                                     <li class="page_item page-item-1"><a href="/mit/portal/index.php?r=site/#">FDP</a>
                                         <ul>
                                             <li class="page_item page-item-1"><a href="FDP_Attended.php"> FDP Attended</a></li>
+                                            <li class="page_item page-item-1"><a href="fdp_attended_list.php"> FDP Attended List</a></li>
                                             <li class="page_item page-item-2"><a href="FDP_Organized.php">FDP Orgnised</a></li>
+                                            <li class="page_item page-item-2"><a href="fdp_organized_list.php">FDP Orgnised List</a></li>
                                         </ul>
                                     </li>
 
