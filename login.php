@@ -6,9 +6,9 @@ echo '<pre>' . print_r($_SESSION, TRUE) . '</pre>';
 $mysqli = new mysqli('localhost','root' ,'', 'accounts' );
 if(isset($_POST['Submit']))
 {
-$username = trim($_POST['username']);
+$email = trim($_POST['email']);
 $password = trim($_POST['password']);
-$query = "SELECT * FROM users WHERE username='$username' 
+$query = "SELECT * FROM users WHERE email='$email' 
 AND password='$password'";
 
 $result = mysqli_query($mysqli,$query)or die(mysqli_error($mysql));
@@ -59,8 +59,8 @@ if( $num_row ==1 )
     <div class="wrapper">
         <div style="height: 350px" class="container">
             <div class="mb-3">
-                <label class="form-label">User Name* :</label>
-                <input type="text" class="form-control" name= "username" placeholder="User Name">
+                <label class="form-label">email* :</label>
+                <input type="email" class="form-control" name= "email" placeholder="email">
             </div>
             <div class="mb-3">
                 <label class="form-label">Password* :</label>
