@@ -66,7 +66,7 @@ $query = mysqli_query($mysqli, $sql);
             <td><?php echo $row['level'] ?></td>
             <td><?php echo get_Added_Name($row['conatt_added_by']); ?></td>
             <td><a href="<?php echo "ConferenceAtt-By.php?up_id=".$row['conatt_id'] ?>">Edit</a></td>
-            <td><a href="<?php echo "ConferenceAtt-By.php?up_id=".$row['conatt_id'] ?>">Edit</a></td>
+            <td><a href="<?php echo "delete/conf_del_.php?id=".$row['conatt_id'] ?>">Delete</a></td>
           </tr>
         <?php
           $i++;
