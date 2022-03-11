@@ -46,6 +46,8 @@ $query = mysqli_query($mysqli, $sql);
           <th scope="col">Ending Date</th>
           <th scope="col">Level</th>
           <th scope="col">Added By</th>
+          <th scope="col">Edit</th>
+          <th scope="col">Delete</th>
         </tr>
       </thead>
       <tbody class="table-light">
@@ -63,6 +65,8 @@ $query = mysqli_query($mysqli, $sql);
             <td><?php echo $row['todate'] ?></td>
             <td><?php echo $row['level'] ?></td>
             <td><?php echo get_Added_Name($row['conatt_added_by']); ?></td>
+            <td><a href="<?php echo "ConferenceAtt-By.php?up_id=".$row['conatt_id'] ?>">Edit</a></td>
+            <td><a href="<?php echo "ConferenceAtt-By.php?up_id=".$row['conatt_id'] ?>">Edit</a></td>
           </tr>
         <?php
           $i++;

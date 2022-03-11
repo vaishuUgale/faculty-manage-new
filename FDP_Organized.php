@@ -8,7 +8,39 @@ if (!isset($_SESSION['username'])) {
 
 $FDPOrganizedAdded = $_SESSION['user_id'];
 $FDPOrganizedBy = $_SESSION['user_id'];
+$UpId = "";
+if (isset($_GET["up_id"])) {
+    $UpId = $_GET["up_id"];
+}
+$FDPOrganizedByVal = "";
 
+$fdpname = "";
+
+$fromdate = "";
+
+$todate = "";
+
+$level = "";
+if ($UpId != "") {
+    echo "sc";
+    $findSql = "SELECT * FROM fdporg WHERE fdporg_id='$UpId'";
+    if (mysqli_num_rows(mysqli_query($mysqli, $findSql)) > 0) {
+
+        $res_find_row = mysqli_fetch_assoc(mysqli_query($mysqli, $findSql));
+        $FDPOrganizedByVal = $res_find_row['fdporg_user_id'];
+
+        $fdpname = $res_find_row['fdpname'];
+
+        $fromdate = $res_find_row['fromdate'];
+
+        $todate = $res_find_row['todate'];
+
+        $level = $res_find_row['level'];
+    } else {
+        alert("No data found");
+        echo '<script>window.location.href="home.php"</script>';
+    }
+}
 if ($_SERVER['REQUEST_METHOD']   == 'POST') {
     // success!
     if ($_SESSION['role'] == 'admin') {
@@ -24,19 +56,33 @@ if ($_SERVER['REQUEST_METHOD']   == 'POST') {
     $todate = $mysqli->real_escape_string($_POST['todate']);
     $level = $mysqli->real_escape_string($_POST['level']);
 
+    if ($UpId == "") {
+        $sql = "INSERT INTO `fdporg`(`FDPOrganizedBy`,`fdpname`, `fromdate`, `todate`, `level`,`fdporg_user_id`, `fdporg_added_by`) 
+    VALUES('$FDPOrganizedBy','$fdpname','$fromdate','$todate','$level','$FDPOrganizedBy','$FDPOrganizedAdded');";
 
-    $sql = "INSERT INTO `fdporg`(`fdpname`, `fromdate`, `todate`, `level`,`fdporg_user_id`, `fdporg_added_by`) 
-    VALUES('$fdpname','$fromdate','$todate','$level','$FDPOrganizedBy','$FDPOrganizedAdded');";
+        if ($mysqli->query($sql) == true) {
+            $last_id = $mysqli->insert_id;
 
-    if ($mysqli->query($sql) == true) {
-        $last_id = $mysqli->insert_id;
+            genID($last_id, "fdporg", "fdporg_id", "fdporg");
+            alert("success");
+            echo '<script>history.back()</script>';
 
-        genID($last_id, "fdporg", "fdporg_id", "fdporg");
-        alert("success");
+        } else {
+            // failed 
+
+            alert("unsuccessful");
+        }
     } else {
-        // failed 
+        $sql="UPDATE `fdporg` SET `FDPOrganizedBy` = '$FDPOrganizedBy', `fdpname` = '$fdpname', `fromdate` = '$fromdate', `todate` = '$todate', `level` = '$level', `fdporg_user_id` = '$FDPOrganizedBy' WHERE `fdporg`.`fdporg_id` = '$UpId';";
+        if ($mysqli->query($sql) == true) {
+            echo '<script>history.back()</script>';
 
-        alert("unsuccessful");
+            alert("success");
+        } else {
+            // failed 
+
+            alert("unsuccessful");
+        }
     }
 }
 
@@ -78,7 +124,11 @@ if ($_SERVER['REQUEST_METHOD']   == 'POST') {
                             <option disabled selected value="def">Select Faculty</option>
                             <?php
                             while ($users = mysqli_fetch_assoc($users_q)) {
-                                echo "<option value='" . $users['user_id'] . "'>" . $users['username'] . "</option>";
+
+                            ?>
+                                <option value="<?php echo $users['user_id'] ?>" <?php echo $FDPOrganizedByVal == $users['user_id'] ? 'selected' : '' ?>><?php echo $users['username'] ?> </option>
+                            <?php
+
                             }
                             ?>
                         </select>
@@ -88,23 +138,23 @@ if ($_SERVER['REQUEST_METHOD']   == 'POST') {
                 </div>
                 <div class="mb-3">
                     <label class="form-label">FDP Name :</label>
-                    <input type="text" class="form-control" name="fdpname" placeholder="FDP Name">
+                    <input type="text" class="form-control" value="<?php echo $fdpname ?>"name="fdpname" placeholder="FDP Name">
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Date :</label><br>
                     <div class="cont">
                         <label class="form-label" id="item1">From</label>
-                        <input type="date" name="fromdate" class="form-control">
+                        <input type="date" value="<?php echo $fromdate ?>"name="fromdate" class="form-control">
                         <label class="form-label" id="item1">To</label>
-                        <input type="date" name="todate" class="form-control">
+                        <input type="date" value="<?php echo $todate ?>"name="todate" class="form-control">
                     </div>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Level :</label>
                     <select class="form-control" name="level">
-                        <option value="State">State</option>
-                        <option value="National">National</option>
-                        <option value="International">International</option>
+                    <option <?php echo $level == "State" ? 'selected' : '' ?> value="State">State</option>
+                        <option <?php echo $level == "National" ? 'selected' : '' ?> value="National">National</option>
+                        <option <?php echo $level == "International" ? 'selected' : '' ?> value="International">International</option>
                     </select>
                 </div>
                 <div class="mb-3">

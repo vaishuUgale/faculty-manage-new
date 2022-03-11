@@ -2,6 +2,41 @@
 session_start();
 include("./conn.php");
 include("./functions.php");
+$UpId = "";
+if (isset($_GET["up_id"])) {
+    $UpId = $_GET["up_id"];
+}
+$ConAttendedVal = "";
+
+$Conname = "";
+
+$fromdate = "";
+
+$todate = "";
+
+$level = "";
+
+if ($UpId != "") {
+    echo "sc";
+    $findSql = "SELECT * FROM conatt WHERE conatt_id='$UpId'";
+    if (mysqli_num_rows(mysqli_query($mysqli, $findSql)) > 0) {
+
+        $res_find_row = mysqli_fetch_assoc(mysqli_query($mysqli, $findSql));
+        $ConAttendedVal = $res_find_row['conatt_user_id'];
+
+        $Conname = $res_find_row['Conname'];
+
+        $fromdate = $res_find_row['fromdate'];
+
+        $todate = $res_find_row['todate'];
+
+        $level = $res_find_row['level'];
+    } else {
+        alert("No data found");
+        echo '<script>window.location.href="home.php"</script>';
+    }
+}
+
 
 $ConAttended = $_SESSION['user_id'];
 $ConAttendedAddedBy = $_SESSION['user_id'];
@@ -9,6 +44,7 @@ if (!isset($_SESSION['username'])) {
     echo '<script>window.location.href="login.php"</script>';
 }
 if ($_SERVER['REQUEST_METHOD']   == 'POST') {
+
     // success!
     if ($_SESSION['role'] == 'admin') {
         $ConAttended = $mysqli->real_escape_string($_POST['ConAttended']);
@@ -19,19 +55,31 @@ if ($_SERVER['REQUEST_METHOD']   == 'POST') {
     $todate = $mysqli->real_escape_string($_POST['todate']);
     $level = $mysqli->real_escape_string($_POST['level']);
 
+    if ($UpId == "") {
+        $sql = "INSERT INTO `conatt`(`ConAttended`, `Conname`, `fromdate`, `todate`, `level`, `conatt_user_id`, `conatt_added_by`)
+       VALUES('$ConAttended','$Conname','$fromdate','$todate','$level','$ConAttended','$ConAttendedAddedBy');";
 
-    $sql = "INSERT INTO `conatt`(`ConAttended`, `Conname`, `fromdate`, `todate`, `level`, `conatt_user_id`, `conatt_added_by`)
-  VALUES('$ConAttended','$Conname','$fromdate','$todate','$level','$ConAttended','$ConAttendedAddedBy');";
+        if ($mysqli->query($sql) == true) {
+            $last_id = $mysqli->insert_id;
 
-    if ($mysqli->query($sql) == true) {
-        $last_id = $mysqli->insert_id;
+            genID($last_id, 'conatt', 'conatt_id', 'conatt');
+            alert("success");
+            echo '<script>window.location.href="home.php"</script>';
 
-        genID($last_id, 'conatt', 'conatt_id', 'conatt');
-        alert("success");
+        } else {
+            // failed 
+
+            alert("Unsuccessful");
+        }
     } else {
-        // failed 
+        $sql = "UPDATE`conatt` SET `ConAttended`='$ConAttended', `Conname`='$Conname', `fromdate`='$fromdate', `todate`='$todate', `level`='$level', `conatt_user_id`='$ConAttended' WHERE conatt_id='$UpId';";
+        if ($mysqli->query($sql) == true) {
+            alert("success");
+            echo '<script>window.location.href="home.php"</script>';
 
-        alert("Unsuccessful");
+        } else {
+            alert("Unsuccessful");
+        }
     }
 }
 ?>
@@ -60,54 +108,58 @@ if ($_SERVER['REQUEST_METHOD']   == 'POST') {
 
     <div class="wrapper">
         <form action="" method="post">
-        <div class="container">
-            <div class="mb-3">
-                <?php
-                if ($_SESSION['role'] == 'admin') {
-                    $users_q = mysqli_query($mysqli, "select * from users");
+            <div class="container">
+                <div class="mb-3">
+                    <?php
+                    if ($_SESSION['role'] == 'admin') {
+                        $users_q = mysqli_query($mysqli, "select * from users");
 
-                ?>
-                    <label class="form-label">Name of Faculty :</label>
-                    <select class="form-control" name="ConAttended">
-                        <option disabled selected value="def">Select Faculty</option>
-                        <?php
-                        while ($users = mysqli_fetch_assoc($users_q)) {
-                            echo "<option value='" . $users['user_id'] . "'>" . $users['username'] . "</option>";
-                        }
-                        ?>
+                    ?>
+                        <label class="form-label">Name of Faculty :</label>
+                        <select class="form-control" name="ConAttended">
+                            <option disabled selected value="def">Select Faculty</option>
+                            <?php
+                            while ($users = mysqli_fetch_assoc($users_q)) {
+
+                            ?>
+                                <option value="<?php echo $users['user_id'] ?>" <?php echo $ConAttendedVal == $users['user_id'] ? 'selected' : '' ?>><?php echo $users['username'] ?> </option>
+                            <?php
+
+                            }
+                            ?>
+                        </select>
+                    <?php
+
+                    } ?>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Conference Name :</label>
+                    <input type="text" value="<?php echo $Conname ?>" class="form-control" name="Conname" placeholder="Conference Name">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Date :</label><br>
+                    <div class="cont">
+                        <label class="form-label" id="item1">From</label>
+                        <input type="date" value="<?php echo $fromdate ?>" name="fromdate" class="form-control">
+                        <label class="form-label" id="item1">To</label>
+                        <input type="date" value="<?php echo $todate ?>" name="todate" class="form-control">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Level :</label>
+                    <select class="form-control" name="level">
+                        <option <?php echo $level == "State" ? 'selected' : '' ?> value="State">State</option>
+                        <option <?php echo $level == "National" ? 'selected' : '' ?> value="National">National</option>
+                        <option <?php echo $level == "International" ? 'selected' : '' ?> value="International">International</option>
                     </select>
-                <?php
+                </div>
+                <div class="mb-3">
+                    <div class="cont-1">
+                        <input type="submit" class="form-control" name="Submit" id="input">
+                    </div>
 
-                } ?>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Conference Name :</label>
-                <input type="text" class="form-control" name="Conname" placeholder="Conference Name">
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Date :</label><br>
-                <div class="cont">
-                    <label class="form-label" id="item1">From</label>
-                    <input type="date" name="fromdate" class="form-control">
-                    <label class="form-label" id="item1">To</label>
-                    <input type="date" name="todate" class="form-control">
                 </div>
             </div>
-            <div class="mb-3">
-                <label class="form-label">Level :</label>
-                <select class="form-control" name="level">
-                    <option value="State">State</option>
-                    <option value="National">National</option>
-                    <option value="Internatinal">International</option>
-                </select>
-            </div>
-            <div class="mb-3">
-                <div class="cont-1">
-                    <input type="submit" class="form-control" name="Submit" id="input">
-                </div>
-
-            </div>
-        </div>
         </form>
     </div>
     <!-- Optional JavaScript; choose one of the two! -->

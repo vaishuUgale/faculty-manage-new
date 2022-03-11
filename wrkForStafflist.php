@@ -45,6 +45,7 @@ $query = mysqli_query($mysqli, $sql);
           <th scope="col">To Date</th>
           <th scope="col">Level</th>
           <th scope="col">Added By</th>
+          <th scope="col">Edit</th>
         </tr>
       </thead>
       <tbody class="table-light">
@@ -61,6 +62,8 @@ $query = mysqli_query($mysqli, $sql);
            <td><?php echo $row['todate'] ?></td>
            <td><?php echo $row['level'] ?></td>
            <td><?php echo get_Added_Name($row['wsorg_added_by']); ?></td>
+           <td><a href="<?php echo "WorkshopForStaff.php?up_id=".$row['wsorg_id'] ?>">Edit</a></td>
+
           </tr>
         <?php
         $i++;

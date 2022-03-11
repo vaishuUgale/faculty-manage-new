@@ -9,6 +9,37 @@ if (!isset($_SESSION['username'])) {
 $workshoporg = $_SESSION['user_id'];
 $workshoporgAddedBy = $_SESSION['user_id'];
 
+
+$UpId = "";
+if (isset($_GET["up_id"])) {
+    $UpId = $_GET["up_id"];
+}
+
+$workshoporgVal = "";
+
+$workshopname = "";
+
+$fromdate = "";
+
+$todate = "";
+
+$level = "";
+if ($UpId != "") {
+    $findSql = "SELECT * FROM  wsorgfstud WHERE  wsorgfstud_id='$UpId'";
+    if (mysqli_num_rows(mysqli_query($mysqli, $findSql)) > 0) {
+
+        $res_find_row = mysqli_fetch_assoc(mysqli_query($mysqli, $findSql));
+
+        $workshoporgVal = $res_find_row['workshoporg'];
+        $workshopname = $res_find_row['workshopname'];
+        $fromdate = $res_find_row['fromdate'];
+        $todate = $res_find_row['todate'];
+        $level = $res_find_row['level'];
+    } else {
+        alert("No data found");
+        echo '<script>window.location.href="home.php"</script>';
+    }
+}
 if ($_SERVER['REQUEST_METHOD']   == 'POST') {
     // success!
     if ($_SESSION['role'] == 'admin') {
@@ -20,19 +51,33 @@ if ($_SERVER['REQUEST_METHOD']   == 'POST') {
     $todate = $mysqli->real_escape_string($_POST['todate']);
     $level = $mysqli->real_escape_string($_POST['level']);
 
-
-    $sql = "INSERT INTO `wsorgfstud`(`workshoporg`, `workshopname`, `fromdate`, `todate`, `level`,`wsorgfstud_added_by`, `wsorgfstud_user_id`) 
+    if ($UpId == "") {
+        $sql = "INSERT INTO `wsorgfstud`(`workshoporg`, `workshopname`, `fromdate`, `todate`, `level`,`wsorgfstud_added_by`, `wsorgfstud_user_id`) 
  VALUES('$workshoporg','$workshopname','$fromdate','$todate','$level','$workshoporgAddedBy','$workshoporg');";
 
-    if ($mysqli->query($sql) == true) {
-        $last_id = $mysqli->insert_id;
+        if ($mysqli->query($sql) == true) {
+            $last_id = $mysqli->insert_id;
 
-        genID($last_id, 'wsorgfstud', 'wsorgfstud_id', 'wsorgfstud');
-        alert("success");
+            genID($last_id, 'wsorgfstud', 'wsorgfstud_id', 'wsorgfstud');
+            alert("success");
+        } else {
+            // failed 
+
+            alert("Unsuccessful");
+        }
     } else {
-        // failed 
+        $sql = "UPDATE `wsorgfstud` SET `workshoporg` = '$workshoporg', `workshopname` = '$workshopname', `fromdate` = '$fromdate', `todate` = '$todate', `level` = '$level', `wsorgfstud_user_id` = '$workshoporg' WHERE `wsorgfstud`.`wsorgfstud_id` = '$UpId';";
+        if ($mysqli->query($sql) == true) {
+            echo '<script>history.back()</script>';
 
-        alert("Unsuccessful");
+            alert("success");
+        } else {
+            // failed 
+           echo $sql;
+            alert("unsuccessful");
+            // echo '<script>history.back()</script>';
+
+        }
     }
 }
 ?>
@@ -58,57 +103,61 @@ if ($_SERVER['REQUEST_METHOD']   == 'POST') {
     <div class="box">
         <h1>Workshop Organised for Student</h1>
     </div>
-<form action="" method="post">
-    <div class="wrapper">
-        <div class="container">
+    <form action="" method="post">
+        <div class="wrapper">
+            <div class="container">
             <div class="mb-3">
-            <?php
-                if ($_SESSION['role'] == 'admin') {
-                    $users_q = mysqli_query($mysqli, "select * from users");
+                    <?php
+                    if ($_SESSION['role'] == 'admin') {
+                        $users_q = mysqli_query($mysqli, "select * from users");
 
-                ?>
-                    <label class="form-label">Name of Faculty :</label>
-                    <select class="form-control" name="workshoporg">
-                        <option disabled selected value="def">Select Faculty</option>
-                        <?php
-                        while ($users = mysqli_fetch_assoc($users_q)) {
-                            echo "<option value='" . $users['user_id'] . "'>" . $users['username'] . "</option>";
-                        }
-                        ?>
+                    ?>
+                        <label class="form-label">Name of Faculty :</label>
+                        <select class="form-control" name="workshoporg">
+                            <option disabled selected value="def">Select Faculty</option>
+                            <?php
+                            while ($users = mysqli_fetch_assoc($users_q)) {
+
+                                ?>
+                                    <option value="<?php echo $users['user_id'] ?>" <?php echo $workshoporgVal == $users['user_id'] ? 'selected' : '' ?>><?php echo $users['username'] ?> </option>
+                                <?php
+    
+                                }
+                            ?>
+                        </select>
+                    <?php
+
+                    } ?>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Workshop Name :</label>
+                    <input type="text" value="<?php echo $workshopname ?>" class="form-control" name="workshopname" placeholder="Workshop Name">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Date :</label><br>
+                    <div class="cont">
+                        <label class="form-label" id="item1">From</label>
+                        <input type="date"value="<?php echo $fromdate ?>" name="fromdate" class="form-control">
+                        <label class="form-label" id="item1">To</label>
+                        <input type="date" value="<?php echo $todate ?>" name="todate" class="form-control">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Class :</label>
+                    <select class="form-control" name="level">
+                    <option <?php echo $level=="SE"?"selected":"" ?> value="SE">SE</option>
+                        <option <?php echo $level=="TE"?"selected":"" ?> value="TE">TE</option>
+                        <option <?php echo $level=="BE"?"selected":"" ?> value="BE">BE</option>
                     </select>
-                <?php
-
-                } ?>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Workshop Name :</label>
-                <input type="text" class="form-control" name="workshopname" placeholder="Workshop Name">
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Date :</label><br>
-                <div class="cont">
-                    <label class="form-label" id="item1">From</label>
-                    <input type="date" name="fromdate" class="form-control">
-                    <label class="form-label" id="item1">To</label>
-                    <input type="date" name="todate" class="form-control">
                 </div>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Level :</label>
-                <select class="form-control" name="level">
-                    <option value="SE">SE</option>
-                    <option value="TE">TE</option>
-                    <option value="BE">BE</option>
-                </select>
-            </div>
-            <div class="mb-3">
-                <div class="cont-1">
-                    <input type="submit" class="form-control" name="Submit" id="input">
-                </div>
+                <div class="mb-3">
+                    <div class="cont-1">
+                        <input type="submit" class="form-control" name="Submit" id="input">
+                    </div>
 
+                </div>
             </div>
         </div>
-    </div>
     </form>
     <!-- Optional JavaScript; choose one of the two! -->
 

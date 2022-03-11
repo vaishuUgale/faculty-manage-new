@@ -45,6 +45,7 @@ $query = mysqli_query($mysqli, $sql);
           <th scope="col">Level</th>
           <th scope="col">Description</th>
           <th scope="col">Submitted By</th>
+          <th scope="col">Edit</th>
         </tr>
       </thead>
       <tbody class="table-light">
@@ -60,7 +61,9 @@ $query = mysqli_query($mysqli, $sql);
             <td><?php echo $row['date'] ?></td>
             <td><?php echo $row['level'] ?></td>
             <td><?php echo $row['description'] ?></td>
-            <td><?php echo get_Added_Name($row['iv_user_id']); ?></td>
+            <td><?php echo get_Added_Name($row['iv_added_by']); ?></td>
+            <td><a href="<?php echo "IV.php?up_id=".$row['iv_id'] ?>">Edit</a></td>
+
           </tr>
         <?php
           $i++;

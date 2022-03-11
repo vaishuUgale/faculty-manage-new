@@ -45,6 +45,7 @@ $query = mysqli_query($mysqli, $sql);
           <th scope="col">level</th>
           <th scope="col">Organised By</th>
           <th scope="col">Submitted By</th>
+          <th scope="col">Edit</th>
         </tr>
       </thead>
       <tbody class="table-light">
@@ -55,12 +56,14 @@ $query = mysqli_query($mysqli, $sql);
         ?>
           <tr>
             <th scope="row"><?php echo $i;  ?></th>
-            <td><?php echo get_Added_Name($row['guestlect_id']); ?></td>
+            <td><?php echo get_Added_Name($row['glorg']); ?></td>
             <td><?php echo $row['glname'] ?></td>
             <td><?php echo $row['date'] ?></td>
             <td><?php echo $row['level'] ?></td>
             <td><?php echo get_Added_Name($row['glorg']);?></td>
             <td><?php echo get_Added_Name($row['guestlect_added_by']); ?></td>
+            <td><a href="<?php echo "GuestLect.php?up_id=".$row['guestlect_id'] ?>">Edit</a></td>
+
           </tr>
         <?php
           $i++;
