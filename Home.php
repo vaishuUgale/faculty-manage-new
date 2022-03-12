@@ -5,106 +5,275 @@ if (!isset($_SESSION['username'])) {
 }
 
 ?>
+
 <!DOCTYPE html>
-<title>COMPUTER DEPARTMENT - Site</title>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="home.css">
+</head>
 
 <body>
-    <link href="//db.onlinewebfonts.com/c/a4e256ed67403c6ad5d43937ed48a77b?family=Core+Sans+N+W01+35+Light" rel="stylesheet" type="text/css" />
-
-    <!-- <link rel="stylesheet" href="form.css" type="text/css"> -->
-    <form id='w1' action='w1.php' method='post' accept-charset='UTF-8'>
-        <div id="body">
-            <div id="header">
-                <div class="container">
-                    <div id="title">
-
-
-
-                        <div class="description">
-                            <small></small>
+    <nav>
+        <li>home</li>
+        <li>home</li>
+        <li>home</li>
+    </nav>
+    <div class="main">
+        <div class="content">
+            <h2>FDP</h2>
+        </div>
+        <div class="main1">
+            <div class="allboxes">
+                <div class="box">
+                    <a href="https://www.google.com/url?sa=i&url=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Forange-flower&psig=AOvVaw1p4B_3JmV8ZpzEm5r7MUX0&ust=1647117794438000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCNj84ZKrwPYCFQAAAAAdAAAAABAI">
+                        <div class="icons">
+                            <img src="page (2).png" alt="">
                         </div>
+                        <div class="icons">
+                            <p>FDP Attended</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="box">
+                    <div class="icons">
+                        <img src="table (1).png" alt="">
                     </div>
-                    <div id="header_image">
-                        <div id="menu">
-                            <div class="menu_container">
-                                <ul>
+                    <div class="icons">
+                        <p>FDP Attended List</p>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="icons">
+                        <img src="page (1).png" alt="">
+                    </div>
+                    <div class="icons">
+                        <p>FDP Organised</p>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="icons">
+                        <img src="table (1).png" alt="">
+                    </div>
+                    <div class="icons">
+                        <p>FDP Organised List</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main">
+        <div class="content">
+            <h2>Research Publication</h2>
+        </div>
+        <div class="main1">
+            <div class="allboxes">
+                <div class="box">
+                    <div class="icons">
+                        <img src="page (1).png" alt="">
+                    </div>
+                    <div class="icons">
+                        <p>National</p>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="icons">
+                        <img src="table (1).png" alt="">
+                    </div>
+                    <div class="icons">
+                        <p>National List</p>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="icons">
+                        <img src="page (1).png" alt="">
+                    </div>
+                    <div class="icons">
+                        <p>International</p>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="icons">
+                        <img src="table (1).png" alt="">
+                    </div>
+                    <div class="icons">
+                        <p>International List</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main">
+        <div class="content">
+            <h2>Workshop</h2>
+        </div>
+        <div class="main1">
+            <div class="allboxes">
+                <div class="box">
+                    <div class="icons">
+                        <img src="page (1).png" alt="">
+                    </div>
+                    <div class="icons">
+                        <p>Workshop Attended</p>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="icons">
+                        <img src="table (1).png" alt="">
+                    </div>
+                    <div class="icons">
+                        <p>Workshop Attended List</p>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="icons">
+                        <img src="page (1).png" alt="">
+                    </div>
+                    <div class="icons">
+                        <p>Workshop Oeganised for Staff</p>
+                    </div>
+                </div>
 
-                                    <li class="page_item page-item-1"><a href="/mit/portal/index.php?r=site/#">FDP</a>
-                                        <ul>
-                                            <li class="page_item page-item-1"><a href="FDP_Attended.php"> FDP Attended</a></li>
-                                            <li class="page_item page-item-1"><a href="fdp_attended_list.php"> FDP Attended List</a></li>
-                                            <li class="page_item page-item-2"><a href="FDP_Organized.php">FDP Orgnised</a></li>
-                                            <li class="page_item page-item-2"><a href="fdp_organized_list.php">FDP Orgnised List</a></li>
-                                        </ul>
-                                    </li>
+            </div>
+        </div>
+    </div>
+    <div class="main">
 
+        <div class="main1">
+            <div class="allboxes">
+                <div class="box">
+                    <div class="icons">
+                        <img src="table (1).png" alt="">
+                    </div>
+                    <div class="icons">
+                        <p>Workshop Organised List</p>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="icons">
+                        <img src="page (1).png" alt="">
+                    </div>
+                    <div class="icons">
+                        <p>Workshop Organised for Students</p>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="icons">
+                        <img src="table (1).png" alt="">
+                    </div>
+                    <div class="icons">
+                        <p>Workshop Student List</p>
+                    </div>
+                </div>
 
-                                    <li class="page_item page-item-2"><a href="form.php">Research Publication</a>
-                                        <ul>
-                                            <li class="page_item page-item-1"><a href="NPP.php"> National</a></li>
-                                            <li class="page_item page-item-1"><a href="resnat_list.php"> National list</a></li>
-                                            <li class="page_item page-item-2"><a href="IPP.php">International</a></li>
-                                            <li class="page_item page-item-1"><a href="resinnat_list.php"> International list</a></li>
-                                        </ul>
-                                    </li>
+            </div>
+        </div>
+    </div>
+    <div class="main">
+        <div class="content">
+            <h2>Many More Options</h2>
+        </div>
+        <div class="main1">
+            <div class="allboxes">
+                <div class="box">
+                    <div class="icons">
+                        <img src="presentation.png" alt="">
+                    </div>
+                    <div class="icons">
+                        <p>Conference</p>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="icons">
+                        <img src="table (1).png" alt="">
+                    </div>
+                    <div class="icons">
+                        <p>Conference attendence List</p>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="icons">
+                        <img src="lecture.png" alt="">
+                    </div>
+                    <div class="icons">
+                        <p>Guest Lecture</p>
+                    </div>
+                </div>
 
-                                    <li class="page_item page-item-1"><a href="/mit/portal/index.php?r=site/#">Workshop</a>
-                                        <ul>
-                                            <li class="page_item page-item-1">
-                                                <a href="Workshop_Attended.php"> Workshop Attended</a>
-                                            </li>
-                                            <li class="page_item page-item-1">
-                                                <a href="wrkattendlist.php"> Workshop Attended List</a>
-                                            </li>
-                                            <li class="page_item page-item-2">
-                                                <a href="WorkshopForStaff.php">Workshop Orgnised For Staff </a>
-                                            </li>
-                                            <li class="page_item page-item-1">
-                                                <a href="wrkForStafflist.php"> Workshop Orgnised List</a>
-                                            </li>
-                                            <li class="page_item page-item-2">
-                                                <a href="WorkshopForStudent.php">Workshop Orgnised For Student </a>
-                                            </li>
-                                            <li class="page_item page-item-1">
-                                                <a href="wrkForStudlist.php"> Workshop Student List</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li class="page_item page-item-3">
-                                        <a href="ConferenceAtt-By.php">Conference</a>
-                                    </li>
-                                    <li class="page_item page-item-3">
-                                        <a href="conference_list.php">Conference attendence List</a>
-                                    </li>
-                                    <li class="page_item page-item-3">
-                                        <a href="GuestLect.php">Guest Lecture</a>
-                                    </li>
-                                    <li class="page_item page-item-3">
-                                        <a href="Guest_lec_list.php">Guest Lecture list</a>
-                                    </li>
+            </div>
+        </div>
+    </div>
+    <div class="main">
 
-                                    <li class="page_item page-item-3">
-                                        <a href="IV.php">Industrial Visit</a>
-                                    </li>
-                                    <li class="page_item page-item-3">
-                                        <a href="IV_list.php">Industrial Visit list</a>
-                                    </li>
+        <div class="main1">
+            <div class="allboxes">
+                <div class="box">
+                    <div class="icons">
+                        <img src="table (1).png" alt="">
+                    </div>
+                    <div class="icons">
+                        <p>Guest Lecture List</p>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="icons">
+                        <img src="table (1).png" alt="">
+                    </div>
+                    <div class="icons">
+                        <p>Industrial Visit</p>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="icons">
+                        <img src="table (1).png" alt="">
+                    </div>
+                    <div class="icons">
+                        <p>Industrial Visit List</p>
+                    </div>
+                </div>
 
-                                    <li class="page_item page-item-3"><a href="/mit/portal/index.php?r=site/#">Display</a>
-                                        <ul>
-                                            <li class="page_item page-item-1">
-                                                <a href="Record_Individual.php"> Individual</a>
-                                            </li>
-                                            <li class="page_item page-item-2">
-                                                <a href="record_allstaff.php"> All Staff</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li class="page_item page-item-3"><a href="signout.php">Signout</a>
-                                    </li>
+            </div>
+        </div>
+    </div>
 
+    <div class="main">
+        <div class="content">
+            <h2>Display</h2>
+        </div>
+        <div class="main1">
+            <div class="allboxes">
+                <div class="box">
+                    <div class="icons">
+                        <img src="table (1).png" alt="">
+                    </div>
+                    <div class="icons">
+                        <p>Individual</p>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="icons">
+                        <img src="table (1).png" alt="">
+                    </div>
+                    <div class="icons">
+                        <p>All Staff</p>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="icons">
+                        <img src="table (1).png" alt="">
+                    </div>
+                    <div class="icons">
+                        <p>Signout</p>
+                    </div>
+                </div>
+                
 
-    </form>
+                
+
 
 
 </body>
