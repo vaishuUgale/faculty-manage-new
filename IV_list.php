@@ -9,8 +9,8 @@ $user_id = $_SESSION['user_id'];
 
 $sql = "SELECT * FROM `iv` WHERE iv_user_id='$user_id'";
 if (isset($_GET['admin'])) {
-  if($_SESSION['role']=='admin') {
-  $sql="SELECT * FROM `iv`";
+  if ($_SESSION['role'] == 'admin') {
+    $sql = "SELECT * FROM `iv`";
   }
 }
 $query = mysqli_query($mysqli, $sql);
@@ -32,7 +32,7 @@ $query = mysqli_query($mysqli, $sql);
 
 <body>
   <div class="box">
-    <h1>Indrustrial visit  Report</h1>
+    <h1>Indrustrial visit Report</h1>
   </div>
   <div class="container">
     <table class="table table-hover">
@@ -45,6 +45,7 @@ $query = mysqli_query($mysqli, $sql);
           <th scope="col">Level</th>
           <th scope="col">Description</th>
           <th scope="col">Submitted By</th>
+          <th scope="col">File</th>
           <th scope="col">Edit</th>
         </tr>
       </thead>
@@ -62,7 +63,8 @@ $query = mysqli_query($mysqli, $sql);
             <td><?php echo $row['level'] ?></td>
             <td><?php echo $row['description'] ?></td>
             <td><?php echo get_Added_Name($row['iv_added_by']); ?></td>
-            <td><a href="<?php echo "IV.php?up_id=".$row['iv_id'] ?>">Edit</a></td>
+            <td><a <?php echo $row['iv_file'] != null ? "href='" . $row['iv_file'] . "'" : '' ?> target="_blank"><?php echo $row['iv_file'] != null ? 'Go to file' : 'No file' ?></a></td>
+            <td><a href="<?php echo "IV.php?up_id=" . $row['iv_id'] ?>">Edit</a></td>
 
           </tr>
         <?php

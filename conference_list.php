@@ -46,6 +46,7 @@ $query = mysqli_query($mysqli, $sql);
           <th scope="col">Ending Date</th>
           <th scope="col">Level</th>
           <th scope="col">Added By</th>
+          <th scope="col">File</th>
           <th scope="col">Edit</th>
           <th scope="col">Delete</th>
         </tr>
@@ -65,6 +66,7 @@ $query = mysqli_query($mysqli, $sql);
             <td><?php echo $row['todate'] ?></td>
             <td><?php echo $row['level'] ?></td>
             <td><?php echo get_Added_Name($row['conatt_added_by']); ?></td>
+            <td><a <?php echo $row['conatt_file']!=null?"href='".$row['conatt_file']."'":'' ?> target="_blank"><?php echo $row['conatt_file']!=null?'Go to file':'No file' ?></a></td>
             <td><a href="<?php echo "ConferenceAtt-By.php?up_id=".$row['conatt_id'] ?>">Edit</a></td>
             <td><a href="<?php echo "delete/conf_del_.php?id=".$row['conatt_id'] ?>">Delete</a></td>
           </tr>

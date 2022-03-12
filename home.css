@@ -3,15 +3,17 @@
 body {
     /* margin: 0; */
     font-family: 'Montserrat', sans-serif;
-    background: url("yellow\ pink\ shade.jpg");
-    background-size: cover;
+    /* background: url("yellow\ pink\ shade.jpg");
+    background-size: cover; */
+    background-color: #ffff66;
+
 }
 .content h2 {
     font-size: 35px;
     margin-top: 50px;
     padding-left: 100px;
     color: rgb(83, 6, 36);
-    text-shadow: 5px 5px rgb(255, 237, 72);
+    /* text-shadow: 5px 5px rgb(255, 237, 72); */
 }
 .main1 {
     width: 100%;
@@ -29,11 +31,18 @@ body {
 .box {
     height: 180px;
     width: 260px;
-    background-color: white;
+    background-color: #ffffff;
     /* border: 2px solid black; */
+    padding: 0 10px;
     border-radius: 30px;
     position: relative;
-    box-shadow: 6px 3px 5px 5px rgb(196, 196, 196);
+    /* box-shadow: 6px 3px 5px 5px rgb(196, 196, 196); */
+    /* box-shadow: 0px 1px 14px 3px rgb(0 0 0 / 50%); */
+    transition: 0.2s linear;
+}
+.box:hover {
+
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
 .icons {
     display: flex;
@@ -47,9 +56,9 @@ body {
 }
 
 .icons p {
-    font-weight: 1000px;
+    font-weight: 1000;
     font-size: 20px;
-    color: rgb(59, 59, 61);
+    color: rgb(0, 0, 0);
 }
 .end button{
     height: 80px;

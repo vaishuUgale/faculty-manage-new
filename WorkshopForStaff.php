@@ -22,6 +22,8 @@ $fromdate = "";
 $todate = "";
 
 $level = "";
+
+$file = "";
 if ($UpId != "") {
     $findSql = "SELECT * FROM wsorg WHERE wsorg_id='$UpId'";
     if (mysqli_num_rows(mysqli_query($mysqli, $findSql)) > 0) {
@@ -33,6 +35,7 @@ if ($UpId != "") {
         $fromdate = $res_find_row['fromdate'];
         $todate = $res_find_row['todate'];
         $level = $res_find_row['level'];
+        $file = $res_find_row['wsorg_file'];
     } else {
         alert("No data found");
         echo '<script>window.location.href="home.php"</script>';
@@ -50,33 +53,96 @@ if ($_SERVER['REQUEST_METHOD']   == 'POST') {
     $todate = $mysqli->real_escape_string($_POST['todate']);
     $level = $mysqli->real_escape_string($_POST['level']);
 
+    $fileName  =  $_FILES['file']['name'];
+    $file_only_name  =  explode(".", $fileName)[0];
+
+
+    $tempPath  =  $_FILES['file']['tmp_name'];
+    $fileSize  =  $_FILES['file']['size'];
+    $file_type = $_FILES['file']['type'];
+    $file_store = "upload/wrk_org_doc/";
+    $upload_path = "./upload/wrk_org_doc/";
+    $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION)); // get image extension
+
+    $valid_extensions = array('pdf', 'pptx', 'doc', 'docx');
+
+
     if ($UpId == "") {
-    $sql = "INSERT INTO `wsorg`(`workshoporg`, `workshopname`, `fromdate`, `todate`, `level`,`wsorg_added_by`,`wsorg_user_id`)
+        if (empty($fileName)) {
+
+            $sql = "INSERT INTO `wsorg`(`workshoporg`, `workshopname`, `fromdate`, `todate`, `level`,`wsorg_added_by`,`wsorg_user_id`)
   VALUES('$workshoporg','$workshopname','$fromdate','$todate','$level','$workshoporgAddedBy','$workshoporg');";
 
-    if ($mysqli->query($sql) == true) {
-        $last_id = $mysqli->insert_id;
+            if ($mysqli->query($sql) == true) {
+                $last_id = $mysqli->insert_id;
 
-        genID($last_id, 'wsorg', 'wsorg_id', 'wsorg');
-        alert("success");
+                genID($last_id, 'wsorg', 'wsorg_id', 'wsorg');
+                alert("success");
+            } else {
+                // failed 
+
+                alert("unsuccessful");
+            }
+        } else {
+            if (in_array($fileExt, $valid_extensions)) {
+                $t = time();
+                $uploader = $file_store . $file_only_name . $workshoporg . $t . '.' . $fileExt;
+                move_uploaded_file($tempPath, $uploader);
+                $sql = "INSERT INTO `wsorg`(`workshoporg`, `workshopname`, `fromdate`, `todate`, `level`,`wsorg_file`,`wsorg_added_by`,`wsorg_user_id`)
+              VALUES('$workshoporg','$workshopname','$fromdate','$todate','$level','$uploader','$workshoporgAddedBy','$workshoporg');";
+
+                if ($mysqli->query($sql) == true) {
+                    $last_id = $mysqli->insert_id;
+
+                    genID($last_id, 'wsorg', 'wsorg_id', 'wsorg');
+                    alert("success");
+                } else {
+                    // failed 
+
+                    alert("unsuccessful");
+                }
+            } else {
+                alert("Please Provide valid file");
+            }
+        }
     } else {
-        // failed 
+        if (empty($fileName)) {
+            $sql = "UPDATE `wsorg` SET `workshoporg` = '$workshoporg', `workshopname` = '$workshopname', `fromdate` = '$fromdate', `todate` = '$todate', `level` = '$level', `wsorg_user_id` = '$workshoporg' WHERE `wsorg`.`wsorg_id` = '$UpId';";
+            if ($mysqli->query($sql) == true) {
+                echo '<script>history.back()</script>';
 
-        alert("unsuccessful");
+                alert("success");
+            } else {
+                // failed 
+                alert("unsuccessful");
+                echo '<script>history.back()</script>';
+
+            }
+        } else {
+            if (in_array($fileExt, $valid_extensions)) {
+                $t = time();
+                $uploader = $file_store . $file_only_name . $workshoporg . $t . '.' . $fileExt;
+                move_uploaded_file($tempPath, $uploader);
+                $sql = "UPDATE `wsorg` SET `workshoporg` = '$workshoporg', `workshopname` = '$workshopname', `fromdate` = '$fromdate', `todate` = '$todate', `level` = '$level', `wsorg_file`='$uploader',`wsorg_user_id` = '$workshoporg' WHERE `wsorg`.`wsorg_id` = '$UpId';";
+
+
+                if ($mysqli->query($sql) == true) {
+   
+                    alert("success");
+                    echo '<script>history.back()</script>';
+
+                } else {
+                    // failed 
+
+                    alert("unsuccessful");
+                    echo '<script>history.back()</script>';
+
+                }
+            } else {
+                alert("Please Provide valid file");
+            }
+        }
     }
-}else{
-    $sql="UPDATE `wsorg` SET `workshoporg` = '$workshoporg', `workshopname` = '$workshopname', `fromdate` = '$fromdate', `todate` = '$todate', `level` = '$level', `wsorg_user_id` = '$workshoporg' WHERE `wsorg`.`wsorg_id` = '$UpId';";
-    if ($mysqli->query($sql) == true) {
-        echo '<script>history.back()</script>';
-
-        alert("success");
-    } else {
-        // failed 
-        alert("unsuccessful");
-        // echo '<script>history.back()</script>';
-
-    }
-}
 }
 ?>
 <!doctype html>
@@ -101,11 +167,11 @@ if ($_SERVER['REQUEST_METHOD']   == 'POST') {
     <div class="box">
         <h1>Workshop Organised for Staff</h1>
     </div>
-    <form action="" method="post">
+    <form action="" method="post" enctype="multipart/form-data">
 
         <div class="wrapper">
             <div class="container">
-            <div class="mb-3">
+                <div class="mb-3">
                     <?php
                     if ($_SESSION['role'] == 'admin') {
                         $users_q = mysqli_query($mysqli, "select * from users");
@@ -117,11 +183,11 @@ if ($_SERVER['REQUEST_METHOD']   == 'POST') {
                             <?php
                             while ($users = mysqli_fetch_assoc($users_q)) {
 
-                                ?>
-                                    <option value="<?php echo $users['user_id'] ?>" <?php echo $workshoporgVal == $users['user_id'] ? 'selected' : '' ?>><?php echo $users['username'] ?> </option>
-                                <?php
-    
-                                }
+                            ?>
+                                <option value="<?php echo $users['user_id'] ?>" <?php echo $workshoporgVal == $users['user_id'] ? 'selected' : '' ?>><?php echo $users['username'] ?> </option>
+                            <?php
+
+                            }
                             ?>
                         </select>
                     <?php
@@ -136,7 +202,7 @@ if ($_SERVER['REQUEST_METHOD']   == 'POST') {
                     <label class="form-label">Date :</label><br>
                     <div class="cont">
                         <label class="form-label" id="item1">From</label>
-                        <input type="date"value="<?php echo $fromdate ?>" name="fromdate" class="form-control">
+                        <input type="date" value="<?php echo $fromdate ?>" name="fromdate" class="form-control">
                         <label class="form-label" id="item1">To</label>
                         <input type="date" value="<?php echo $todate ?>" name="todate" class="form-control">
                     </div>
@@ -144,11 +210,24 @@ if ($_SERVER['REQUEST_METHOD']   == 'POST') {
                 <div class="mb-3">
                     <label class="form-label">Level :</label>
                     <select class="form-control" name="level">
-                    <option <?php echo $level == "State" ? 'selected' : '' ?> value="State">State</option>
+                        <option <?php echo $level == "State" ? 'selected' : '' ?> value="State">State</option>
                         <option <?php echo $level == "National" ? 'selected' : '' ?> value="National">National</option>
                         <option <?php echo $level == "International" ? 'selected' : '' ?> value="International">International</option>
                     </select>
                 </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Work organised Documents (only pdf,ppt,Word file) :</label>
+                    <input type="file" class="form-control file" name="file" placeholder="FDP Files">
+                    <?php
+                    if ($file != "") {
+                    ?>
+                        <a href="<?php echo $file  ?>" target="_blank" class="btn btn-primary">Show file</a>
+                    <?php
+                    }
+                    ?>
+                </div>
+
                 <div class="mb-3">
                     <div class="cont-1">
                         <input type="submit" class="form-control" name="Submit" id="input">

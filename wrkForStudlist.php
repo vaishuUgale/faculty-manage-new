@@ -45,6 +45,7 @@ $query = mysqli_query($mysqli, $sql);
           <th scope="col">To Date</th>
           <th scope="col">Level</th>
           <th scope="col">Added By</th>
+          <th scope="col">File</th>
           <th scope="col">Edit</th>
         </tr>
       </thead>
@@ -62,6 +63,7 @@ $query = mysqli_query($mysqli, $sql);
            <td><?php echo $row['todate'] ?></td>
            <td><?php echo $row['level'] ?></td>
            <td><?php echo get_Added_Name($row['wsorgfstud_added_by']); ?></td>
+           <td><a <?php echo $row['wsorgfstud_file']!=null?"href='".$row['wsorgfstud_file']."'":'' ?> target="_blank"><?php echo $row['wsorgfstud_file']!=null?'Go to file':'No file' ?></a></td>
            <td><a href="<?php echo "WorkshopForStudent.php?up_id=".$row['wsorgfstud_id'] ?>">Edit</a></td>
 
           </tr>

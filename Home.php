@@ -18,11 +18,7 @@ if (!isset($_SESSION['username'])) {
 </head>
 
 <body>
-    <nav>
-        <li>home</li>
-        <li>home</li>
-        <li>home</li>
-    </nav>
+
     <div class="main">
         <div class="content">
             <h2>FDP</h2>
@@ -30,7 +26,7 @@ if (!isset($_SESSION['username'])) {
         <div class="main1">
             <div class="allboxes">
                 <div class="box">
-                    <a href="https://www.google.com/url?sa=i&url=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Forange-flower&psig=AOvVaw1p4B_3JmV8ZpzEm5r7MUX0&ust=1647117794438000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCNj84ZKrwPYCFQAAAAAdAAAAABAI">
+                    <a href="./FDP_Attended.php">
                         <div class="icons">
                             <img src="page (2).png" alt="">
                         </div>
@@ -40,28 +36,35 @@ if (!isset($_SESSION['username'])) {
                     </a>
                 </div>
                 <div class="box">
-                    <div class="icons">
-                        <img src="table (1).png" alt="">
-                    </div>
-                    <div class="icons">
-                        <p>FDP Attended List</p>
-                    </div>
+                    <a href="./fdp_attended_list.php">
+
+                        <div class="icons">
+                            <img src="table (1).png" alt="">
+                        </div>
+                        <div class="icons">
+                            <p>FDP Attended List</p>
+                        </div>
+                    </a>
                 </div>
                 <div class="box">
-                    <div class="icons">
-                        <img src="page (1).png" alt="">
-                    </div>
-                    <div class="icons">
-                        <p>FDP Organised</p>
-                    </div>
+                    <a href="./FDP_Organized.php">
+                        <div class="icons">
+                            <img src="page (1).png" alt="">
+                        </div>
+                        <div class="icons">
+                            <p>FDP Organised</p>
+                        </div>
+                    </a>
                 </div>
                 <div class="box">
-                    <div class="icons">
-                        <img src="table (1).png" alt="">
-                    </div>
-                    <div class="icons">
-                        <p>FDP Organised List</p>
-                    </div>
+                    <a href="./fdp_organized_list.php">
+                        <div class="icons">
+                            <img src="table (1).png" alt="">
+                        </div>
+                        <div class="icons">
+                            <p>FDP Organised List</p>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -73,36 +76,44 @@ if (!isset($_SESSION['username'])) {
         <div class="main1">
             <div class="allboxes">
                 <div class="box">
-                    <div class="icons">
-                        <img src="page (1).png" alt="">
-                    </div>
-                    <div class="icons">
-                        <p>National</p>
-                    </div>
+                    <a href="./NPP.php">
+                        <div class="icons">
+                            <img src="page (1).png" alt="">
+                        </div>
+                        <div class="icons">
+                            <p>National</p>
+                        </div>
+                    </a>
                 </div>
                 <div class="box">
-                    <div class="icons">
-                        <img src="table (1).png" alt="">
-                    </div>
-                    <div class="icons">
-                        <p>National List</p>
-                    </div>
+                    <a href="./resnat_list.php">
+                        <div class="icons">
+                            <img src="table (1).png" alt="">
+                        </div>
+                        <div class="icons">
+                            <p>National List</p>
+                        </div>
+                    </a>
                 </div>
                 <div class="box">
-                    <div class="icons">
-                        <img src="page (1).png" alt="">
-                    </div>
-                    <div class="icons">
-                        <p>International</p>
-                    </div>
+                    <a href="./IPP.php">
+                        <div class="icons">
+                            <img src="page (1).png" alt="">
+                        </div>
+                        <div class="icons">
+                            <p>International</p>
+                        </div>
+                    </a>
                 </div>
                 <div class="box">
-                    <div class="icons">
-                        <img src="table (1).png" alt="">
-                    </div>
-                    <div class="icons">
-                        <p>International List</p>
-                    </div>
+                    <a href="./resinnat_list.php">
+                        <div class="icons">
+                            <img src="table (1).png" alt="">
+                        </div>
+                        <div class="icons">
+                            <p>International List</p>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -114,28 +125,34 @@ if (!isset($_SESSION['username'])) {
         <div class="main1">
             <div class="allboxes">
                 <div class="box">
-                    <div class="icons">
-                        <img src="page (1).png" alt="">
-                    </div>
-                    <div class="icons">
-                        <p>Workshop Attended</p>
-                    </div>
+                    <a href="./Workshop_Attended.php">
+                        <div class="icons">
+                            <img src="page (1).png" alt="">
+                        </div>
+                        <div class="icons">
+                            <p>Workshop Attended</p>
+                        </div>
+                    </a>
                 </div>
                 <div class="box">
-                    <div class="icons">
-                        <img src="table (1).png" alt="">
-                    </div>
-                    <div class="icons">
-                        <p>Workshop Attended List</p>
-                    </div>
+                    <a href="./WorkshopForStudent.php">
+                        <div class="icons">
+                            <img src="page (1).png" alt="">
+                        </div>
+                        <div class="icons">
+                            <p>Workshop Organised for student</p>
+                        </div>
+                    </a>
                 </div>
                 <div class="box">
-                    <div class="icons">
-                        <img src="page (1).png" alt="">
-                    </div>
-                    <div class="icons">
-                        <p>Workshop Oeganised for Staff</p>
-                    </div>
+                    <a href="./WorkshopForStaff.php">
+                        <div class="icons">
+                            <img src="page (1).png" alt="">
+                        </div>
+                        <div class="icons">
+                            <p>Workshop Organised for Staff</p>
+                        </div>
+                    </a>
                 </div>
 
             </div>
@@ -146,30 +163,36 @@ if (!isset($_SESSION['username'])) {
         <div class="main1">
             <div class="allboxes">
                 <div class="box">
-                    <div class="icons">
-                        <img src="table (1).png" alt="">
-                    </div>
-                    <div class="icons">
-                        <p>Workshop Organised List</p>
-                    </div>
+                    <a href="./wrkattendlist.php">
+                        <div class="icons">
+                            <img src="table (1).png" alt="">
+                        </div>
+                        <div class="icons">
+                            <p>Workshop Attended List</p>
+                        </div>
+                    </a>
+                </div>
+              
+                <div class="box">
+                    <a href="./wrkForStudlist.php">
+                        <div class="icons">
+                            <img src="table (1).png" alt="">
+                        </div>
+                        <div class="icons">
+                            <p>Workshop Student List</p>
+                        </div>
+                    </a>
                 </div>
                 <div class="box">
-                    <div class="icons">
-                        <img src="page (1).png" alt="">
-                    </div>
-                    <div class="icons">
-                        <p>Workshop Organised for Students</p>
-                    </div>
+                    <a href="./wrkForStafflist.php">
+                        <div class="icons">
+                            <img src="table (1).png" alt="">
+                        </div>
+                        <div class="icons">
+                            <p>Workshop Organised  List</p>
+                        </div>
+                    </a>
                 </div>
-                <div class="box">
-                    <div class="icons">
-                        <img src="table (1).png" alt="">
-                    </div>
-                    <div class="icons">
-                        <p>Workshop Student List</p>
-                    </div>
-                </div>
-
             </div>
         </div>
     </div>
@@ -180,28 +203,34 @@ if (!isset($_SESSION['username'])) {
         <div class="main1">
             <div class="allboxes">
                 <div class="box">
-                    <div class="icons">
-                        <img src="presentation.png" alt="">
-                    </div>
-                    <div class="icons">
-                        <p>Conference</p>
-                    </div>
+                    <a href="./ConferenceAtt-By.php">
+                        <div class="icons">
+                            <img src="presentation.png" alt="">
+                        </div>
+                        <div class="icons">
+                            <p>Conference</p>
+                        </div>
+                    </a>
                 </div>
                 <div class="box">
-                    <div class="icons">
-                        <img src="table (1).png" alt="">
-                    </div>
-                    <div class="icons">
-                        <p>Conference attendence List</p>
-                    </div>
+                    <a href="./conference_list.php">
+                        <div class="icons">
+                            <img src="table (1).png" alt="">
+                        </div>
+                        <div class="icons">
+                            <p>Conference attendence List</p>
+                        </div>
+                    </a>
                 </div>
                 <div class="box">
-                    <div class="icons">
-                        <img src="lecture.png" alt="">
-                    </div>
-                    <div class="icons">
-                        <p>Guest Lecture</p>
-                    </div>
+                    <a href="./GuestLect.php">
+                        <div class="icons">
+                            <img src="lecture.png" alt="">
+                        </div>
+                        <div class="icons">
+                            <p>Guest Lecture</p>
+                        </div>
+                    </a>
                 </div>
 
             </div>
@@ -212,28 +241,34 @@ if (!isset($_SESSION['username'])) {
         <div class="main1">
             <div class="allboxes">
                 <div class="box">
-                    <div class="icons">
-                        <img src="table (1).png" alt="">
-                    </div>
-                    <div class="icons">
-                        <p>Guest Lecture List</p>
-                    </div>
+                    <a href="./Guest_lec_list.php">
+                        <div class="icons">
+                            <img src="table (1).png" alt="">
+                        </div>
+                        <div class="icons">
+                            <p>Guest Lecture List</p>
+                        </div>
+                    </a>
                 </div>
                 <div class="box">
-                    <div class="icons">
-                        <img src="table (1).png" alt="">
-                    </div>
-                    <div class="icons">
-                        <p>Industrial Visit</p>
-                    </div>
+                    <a href="./IV.php">
+                        <div class="icons">
+                            <img src="table (1).png" alt="">
+                        </div>
+                        <div class="icons">
+                            <p>Industrial Visit</p>
+                        </div>
+                    </a>
                 </div>
                 <div class="box">
-                    <div class="icons">
-                        <img src="table (1).png" alt="">
-                    </div>
-                    <div class="icons">
-                        <p>Industrial Visit List</p>
-                    </div>
+                    <a href="./IV_list.php">
+                        <div class="icons">
+                            <img src="table (1).png" alt="">
+                        </div>
+                        <div class="icons">
+                            <p>Industrial Visit List</p>
+                        </div>
+                    </a>
                 </div>
 
             </div>
@@ -263,16 +298,18 @@ if (!isset($_SESSION['username'])) {
                     </div>
                 </div>
                 <div class="box">
+                    <a href="./signout.php">
                     <div class="icons">
                         <img src="table (1).png" alt="">
                     </div>
                     <div class="icons">
                         <p>Signout</p>
                     </div>
+                    </a>
                 </div>
-                
 
-                
+
+
 
 
 

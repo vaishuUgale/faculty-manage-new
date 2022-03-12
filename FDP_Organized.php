@@ -21,6 +21,9 @@ $fromdate = "";
 $todate = "";
 
 $level = "";
+$file = "";
+
+
 if ($UpId != "") {
     echo "sc";
     $findSql = "SELECT * FROM fdporg WHERE fdporg_id='$UpId'";
@@ -36,13 +39,14 @@ if ($UpId != "") {
         $todate = $res_find_row['todate'];
 
         $level = $res_find_row['level'];
+        $file = $res_find_row['fdporg_file'];
     } else {
         alert("No data found");
         echo '<script>window.location.href="home.php"</script>';
     }
 }
 if ($_SERVER['REQUEST_METHOD']   == 'POST') {
-    // success!
+
     if ($_SESSION['role'] == 'admin') {
 
         $FDPOrganizedBy = $mysqli->real_escape_string($_POST['FDPOrganizedBy']);
@@ -56,32 +60,87 @@ if ($_SERVER['REQUEST_METHOD']   == 'POST') {
     $todate = $mysqli->real_escape_string($_POST['todate']);
     $level = $mysqli->real_escape_string($_POST['level']);
 
+    $fileName  =  $_FILES['file']['name'];
+    $file_only_name  =  explode(".", $fileName)[0];
+
+
+    $tempPath  =  $_FILES['file']['tmp_name'];
+    $fileSize  =  $_FILES['file']['size'];
+    $file_type = $_FILES['file']['type'];
+    $file_store = "upload/fdp_org_docs/";
+    $upload_path = "./upload/fdp_org_docs/";
+    $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION)); // get image extension
+
+    $valid_extensions = array('pdf', 'pptx', 'doc', 'docx');
     if ($UpId == "") {
-        $sql = "INSERT INTO `fdporg`(`FDPOrganizedBy`,`fdpname`, `fromdate`, `todate`, `level`,`fdporg_user_id`, `fdporg_added_by`) 
-    VALUES('$FDPOrganizedBy','$fdpname','$fromdate','$todate','$level','$FDPOrganizedBy','$FDPOrganizedAdded');";
+        if (empty($fileName)) {
+            $sql = "INSERT INTO `fdporg`(`FDPOrganizedBy`,`fdpname`, `fromdate`, `todate`, `level`,`fdporg_user_id`, `fdporg_added_by`) 
+            VALUES('$FDPOrganizedBy','$fdpname','$fromdate','$todate','$level','$FDPOrganizedBy','$FDPOrganizedAdded');";
 
-        if ($mysqli->query($sql) == true) {
-            $last_id = $mysqli->insert_id;
+            if ($mysqli->query($sql) == true) {
+                $last_id = $mysqli->insert_id;
 
-            genID($last_id, "fdporg", "fdporg_id", "fdporg");
-            alert("success");
-            echo '<script>history.back()</script>';
+                genID($last_id, "fdporg", "fdporg_id", "fdporg");
+                alert("success");
+                echo '<script>history.back()</script>';
+            } else {
+                // failed 
 
+                alert("unsuccessful");
+            }
         } else {
-            // failed 
+            if (in_array($fileExt, $valid_extensions)) {
+                $t = time();
+                $uploader = $file_store . $file_only_name . $FDPOrganizedBy . $t . '.' . $fileExt;
+                move_uploaded_file($tempPath, $uploader);
+                $sql = "INSERT INTO `fdporg`(`FDPOrganizedBy`,`fdpname`, `fromdate`, `todate`, `level`,`fdporg_file`,`fdporg_user_id`, `fdporg_added_by`) 
+            VALUES('$FDPOrganizedBy','$fdpname','$fromdate','$todate','$level','$uploader','$FDPOrganizedBy','$FDPOrganizedAdded');";
 
-            alert("unsuccessful");
+                if ($mysqli->query($sql) == true) {
+                    $last_id = $mysqli->insert_id;
+
+                    genID($last_id, "fdporg", "fdporg_id", "fdporg");
+                    alert("success");
+                    echo '<script>history.back()</script>';
+                } else {
+                    // failed 
+
+                    alert("unsuccessful");
+                }
+            } else {
+                alert("Please Provide valid file");
+            }
         }
     } else {
-        $sql="UPDATE `fdporg` SET `FDPOrganizedBy` = '$FDPOrganizedBy', `fdpname` = '$fdpname', `fromdate` = '$fromdate', `todate` = '$todate', `level` = '$level', `fdporg_user_id` = '$FDPOrganizedBy' WHERE `fdporg`.`fdporg_id` = '$UpId';";
-        if ($mysqli->query($sql) == true) {
-            echo '<script>history.back()</script>';
+        if (empty($fileName)) {
+            $sql = "UPDATE `fdporg` SET `FDPOrganizedBy` = '$FDPOrganizedBy', `fdpname` = '$fdpname', `fromdate` = '$fromdate', `todate` = '$todate', `level` = '$level', `fdporg_user_id` = '$FDPOrganizedBy' WHERE `fdporg`.`fdporg_id` = '$UpId';";
+            if ($mysqli->query($sql) == true) {
+                echo '<script>history.back()</script>';
 
-            alert("success");
-        } else {
-            // failed 
+                alert("success");
+            } else {
+                // failed 
 
-            alert("unsuccessful");
+                alert("unsuccessful");
+            }
+        }else{
+            if (in_array($fileExt, $valid_extensions)) {
+                $t = time();
+                $uploader = $file_store . $file_only_name . $FDPOrganizedBy . $t . '.' . $fileExt;
+                move_uploaded_file($tempPath, $uploader);
+                $sql = "UPDATE `fdporg` SET `FDPOrganizedBy` = '$FDPOrganizedBy', `fdpname` = '$fdpname', `fromdate` = '$fromdate', `todate` = '$todate', `level` = '$level',`fdporg_file`='$uploader',`fdporg_user_id` = '$FDPOrganizedBy' WHERE `fdporg`.`fdporg_id` = '$UpId';";
+                if ($mysqli->query($sql) == true) {
+                    echo '<script>history.back()</script>';
+    
+                    alert("success");
+                } else {
+                    // failed 
+    
+                    alert("unsuccessful");
+                }
+            }else {
+                alert("Please Provide valid file");
+            }
         }
     }
 }
@@ -109,7 +168,7 @@ if ($_SERVER['REQUEST_METHOD']   == 'POST') {
     <div class="box">
         <h1>FDP Organised By</h1>
     </div>
-    <form action="" method="post">
+    <form action="" method="post" enctype="multipart/form-data">
 
         <div class="wrapper">
             <div class="container">
@@ -138,24 +197,36 @@ if ($_SERVER['REQUEST_METHOD']   == 'POST') {
                 </div>
                 <div class="mb-3">
                     <label class="form-label">FDP Name :</label>
-                    <input type="text" class="form-control" value="<?php echo $fdpname ?>"name="fdpname" placeholder="FDP Name">
+                    <input type="text" class="form-control" value="<?php echo $fdpname ?>" name="fdpname" placeholder="FDP Name">
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Date :</label><br>
                     <div class="cont">
                         <label class="form-label" id="item1">From</label>
-                        <input type="date" value="<?php echo $fromdate ?>"name="fromdate" class="form-control">
+                        <input type="date" value="<?php echo $fromdate ?>" name="fromdate" class="form-control">
                         <label class="form-label" id="item1">To</label>
-                        <input type="date" value="<?php echo $todate ?>"name="todate" class="form-control">
+                        <input type="date" value="<?php echo $todate ?>" name="todate" class="form-control">
                     </div>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Level :</label>
                     <select class="form-control" name="level">
-                    <option <?php echo $level == "State" ? 'selected' : '' ?> value="State">State</option>
+                        <option <?php echo $level == "State" ? 'selected' : '' ?> value="State">State</option>
                         <option <?php echo $level == "National" ? 'selected' : '' ?> value="National">National</option>
                         <option <?php echo $level == "International" ? 'selected' : '' ?> value="International">International</option>
                     </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">FDP Documents (only pdf,ppt,Word file) :</label>
+                    <input type="file" class="form-control file" name="file" placeholder="FDP Files">
+                    <?php
+                    if ($file != "") {
+                    ?>
+                        <a href="<?php echo $file  ?>" target="_blank" class="btn btn-primary">Show file</a>
+                    <?php
+                    }
+                    ?>
                 </div>
                 <div class="mb-3">
                     <div class="cont-1">

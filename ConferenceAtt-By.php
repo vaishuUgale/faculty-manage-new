@@ -15,7 +15,7 @@ $fromdate = "";
 $todate = "";
 
 $level = "";
-
+$file = "";
 if ($UpId != "") {
     echo "sc";
     $findSql = "SELECT * FROM conatt WHERE conatt_id='$UpId'";
@@ -31,6 +31,7 @@ if ($UpId != "") {
         $todate = $res_find_row['todate'];
 
         $level = $res_find_row['level'];
+        $file = $res_find_row['conatt_file'];
     } else {
         alert("No data found");
         echo '<script>window.location.href="home.php"</script>';
@@ -55,30 +56,81 @@ if ($_SERVER['REQUEST_METHOD']   == 'POST') {
     $todate = $mysqli->real_escape_string($_POST['todate']);
     $level = $mysqli->real_escape_string($_POST['level']);
 
+    $fileName  =  $_FILES['file']['name'];
+    $file_only_name  =  explode(".", $fileName)[0];
+
+
+    $tempPath  =  $_FILES['file']['tmp_name'];
+    $fileSize  =  $_FILES['file']['size'];
+    $file_type = $_FILES['file']['type'];
+    $file_store = "upload/connf_docs/";
+    $upload_path = "./upload/connf_docs/";
+    $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION)); // get image extension
+
+    $valid_extensions = array('pdf', 'pptx', 'doc', 'docx');
     if ($UpId == "") {
-        $sql = "INSERT INTO `conatt`(`ConAttended`, `Conname`, `fromdate`, `todate`, `level`, `conatt_user_id`, `conatt_added_by`)
+        if (empty($fileName)) {
+            $sql = "INSERT INTO `conatt`(`ConAttended`, `Conname`, `fromdate`, `todate`, `level`, `conatt_user_id`, `conatt_added_by`)
        VALUES('$ConAttended','$Conname','$fromdate','$todate','$level','$ConAttended','$ConAttendedAddedBy');";
 
-        if ($mysqli->query($sql) == true) {
-            $last_id = $mysqli->insert_id;
+            if ($mysqli->query($sql) == true) {
+                $last_id = $mysqli->insert_id;
 
-            genID($last_id, 'conatt', 'conatt_id', 'conatt');
-            alert("success");
-            echo '<script>window.location.href="home.php"</script>';
+                genID($last_id, 'conatt', 'conatt_id', 'conatt');
+                alert("success");
+                echo '<script>window.location.href="home.php"</script>';
+            } else {
+                // failed 
 
+                alert("Unsuccessful");
+            }
         } else {
-            // failed 
+            if (in_array($fileExt, $valid_extensions)) {
+                $t = time();
+                $uploader = $file_store . $file_only_name . $ConAttended . $t . '.' . $fileExt;
+                move_uploaded_file($tempPath, $uploader);
+                $sql = "INSERT INTO `conatt`(`ConAttended`, `Conname`, `fromdate`, `todate`, `level`, `conatt_file`,`conatt_user_id`, `conatt_added_by`)
+                VALUES('$ConAttended','$Conname','$fromdate','$todate','$level','$uploader','$ConAttended','$ConAttendedAddedBy');";
 
-            alert("Unsuccessful");
+                if ($mysqli->query($sql) == true) {
+                    $last_id = $mysqli->insert_id;
+
+                    genID($last_id, 'conatt', 'conatt_id', 'conatt');
+                    alert("success");
+                    echo '<script>window.location.href="home.php"</script>';
+                } else {
+                    // failed 
+
+                    alert("Unsuccessful");
+                }
+            } else {
+                alert("Please Provide valid file");
+            }
         }
     } else {
-        $sql = "UPDATE`conatt` SET `ConAttended`='$ConAttended', `Conname`='$Conname', `fromdate`='$fromdate', `todate`='$todate', `level`='$level', `conatt_user_id`='$ConAttended' WHERE conatt_id='$UpId';";
-        if ($mysqli->query($sql) == true) {
-            alert("success");
-            echo '<script>window.location.href="home.php"</script>';
-
+        if (empty($fileName)) {
+            $sql = "UPDATE`conatt` SET `ConAttended`='$ConAttended', `Conname`='$Conname', `fromdate`='$fromdate', `todate`='$todate', `level`='$level', `conatt_user_id`='$ConAttended' WHERE conatt_id='$UpId';";
+            if ($mysqli->query($sql) == true) {
+                alert("success");
+                echo '<script>window.location.href="home.php"</script>';
+            } else {
+                alert("Unsuccessful");
+            }
         } else {
-            alert("Unsuccessful");
+            if (in_array($fileExt, $valid_extensions)) {
+                $t = time();
+                $uploader = $file_store . $file_only_name . $ConAttended . $t . '.' . $fileExt;
+                move_uploaded_file($tempPath, $uploader);
+                $sql = "UPDATE`conatt` SET `ConAttended`='$ConAttended', `Conname`='$Conname', `fromdate`='$fromdate', `todate`='$todate', `level`='$level', `conatt_file`='$uploader', `conatt_user_id`='$ConAttended' WHERE conatt_id='$UpId';";
+                if ($mysqli->query($sql) == true) {
+                    alert("success");
+                    echo '<script>window.location.href="home.php"</script>';
+                } else {
+                    alert("Unsuccessful");
+                }
+            } else {
+                alert("Please Provide valid file");
+            }
         }
     }
 }
@@ -107,7 +159,7 @@ if ($_SERVER['REQUEST_METHOD']   == 'POST') {
     </div>
 
     <div class="wrapper">
-        <form action="" method="post">
+        <form action="" method="post" enctype="multipart/form-data">
             <div class="container">
                 <div class="mb-3">
                     <?php
@@ -152,6 +204,17 @@ if ($_SERVER['REQUEST_METHOD']   == 'POST') {
                         <option <?php echo $level == "National" ? 'selected' : '' ?> value="National">National</option>
                         <option <?php echo $level == "International" ? 'selected' : '' ?> value="International">International</option>
                     </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Conference Documents (only pdf,ppt,Word file) :</label>
+                    <input type="file" class="form-control file" name="file" placeholder="FDP Files">
+                    <?php
+                    if ($file != "") {
+                    ?>
+                        <a href="<?php echo $file  ?>" target="_blank" class="btn btn-primary">Show file</a>
+                    <?php
+                    }
+                    ?>
                 </div>
                 <div class="mb-3">
                     <div class="cont-1">

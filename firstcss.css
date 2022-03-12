@@ -37,7 +37,7 @@ body{
     font-weight: 600;
     padding: 20px;
     margin-top: 10px;
-    height: 600px;
+    min-height: 600px;
     width: 700px;
     border: 10px solid rgb(252, 175, 8);
     border-top: 50px solid rgb(252, 175, 8);
@@ -50,6 +50,9 @@ body{
 
 .container .mb-3 .form-control:hover {
     background: #fae978;   
+}
+.container .mb-3 .form-control.file:hover {
+    background: none;   
 }
 .container .mb-3 .cont-1 #input{
     border: 1px solid black;

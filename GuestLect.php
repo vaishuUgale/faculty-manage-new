@@ -16,7 +16,7 @@ $glorgVal = "";
 $glname = "";
 $date = "";
 $level = "";
-
+$file = "";
 if ($UpId != "") {
     $findSql = "SELECT * FROM guestlect WHERE guestlect_id='$UpId'";
     if (mysqli_num_rows(mysqli_query($mysqli, $findSql)) > 0) {
@@ -27,6 +27,7 @@ if ($UpId != "") {
         $glname = $res_find_row['glname'];
         $date = $res_find_row['date'];
         $level = $res_find_row['level'];
+        $file = $res_find_row['guestlect_file'];
     } else {
         alert("No data found");
         echo '<script>window.location.href="home.php"</script>';
@@ -42,33 +43,86 @@ if ($_SERVER['REQUEST_METHOD']   == 'POST') {
 
     $level = $mysqli->real_escape_string($_POST['level']);
 
+    $fileName  =  $_FILES['file']['name'];
+    $file_only_name  =  explode(".", $fileName)[0];
+
+
+    $tempPath  =  $_FILES['file']['tmp_name'];
+    $fileSize  =  $_FILES['file']['size'];
+    $file_type = $_FILES['file']['type'];
+    $file_store = "upload/guest_docs/";
+    $upload_path = "./upload/guest_docs/";
+    $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION)); // get image extension
+
+    $valid_extensions = array('pdf', 'pptx', 'doc', 'docx');
+
     if ($UpId == "") {
-    $sql = "INSERT INTO `guestlect`(`glorg`, `glname`, `date`,`level`, `guestlect_user_id`,`guestlect_added_by`) 
-   VALUES('$glorg','$glname','$date','$level','$glorg','$glorgAddedBy');";
+        if (empty($fileName)) {
+            $sql = "INSERT INTO `guestlect`(`glorg`, `glname`, `date`,`level`, `guestlect_user_id`,`guestlect_added_by`) 
+      VALUES('$glorg','$glname','$date','$level','$glorg','$glorgAddedBy');";
 
-    if ($mysqli->query($sql) == true) {
-        $last_id = $mysqli->insert_id;
+            if ($mysqli->query($sql) == true) {
+                $last_id = $mysqli->insert_id;
 
-        genID($last_id, 'guestlect', 'guestlect_id', 'guestlect');
-        alert("success");
+                genID($last_id, 'guestlect', 'guestlect_id', 'guestlect');
+                alert("success");
+            } else {
+                // failed 
+
+                alert("unsuccessful");
+            }
+        } else {
+            if (in_array($fileExt, $valid_extensions)) {
+                $t = time();
+                $uploader = $file_store . $file_only_name . $glorg . $t . '.' . $fileExt;
+                move_uploaded_file($tempPath, $uploader);
+                $sql = "INSERT INTO `guestlect`(`glorg`, `glname`, `date`,`level`,`guestlect_file`, `guestlect_user_id`,`guestlect_added_by`) 
+                VALUES('$glorg','$glname','$date','$level','$uploader','$glorg','$glorgAddedBy');";
+                if ($mysqli->query($sql) == true) {
+                    $last_id = $mysqli->insert_id;
+
+                    genID($last_id, 'guestlect', 'guestlect_id', 'guestlect');
+                    alert("success");
+                } else {
+                    // failed 
+                    echo $sql;
+                    alert("unsuccessful");
+                }
+            } else {
+                alert("Please Provide valid file");
+            }
+        }
     } else {
-        // failed 
+        if (empty($fileName)) {
+            $sql = "UPDATE `guestlect` SET `glorg` = '$glorg', `glname` = '$glname', `date` = '$date', `level` = '$level', `guestlect_user_id` = '$glorg' WHERE `guestlect`.`guestlect_id` = '$UpId';";
+            if ($mysqli->query($sql) == true) {
+                echo '<script>history.back()</script>';
 
-        alert("unsuccessful");
+                alert("success");
+            } else {
+                // failed 
+               echo '<script>history.back()</script>';
+                
+
+                alert("unsuccessful");
+            }
+        }else{
+            $t = time();
+            $uploader = $file_store . $file_only_name . $glorg . $t . '.' . $fileExt;
+            move_uploaded_file($tempPath, $uploader);
+            $sql = "UPDATE `guestlect` SET `glorg` = '$glorg', `glname` = '$glname', `date` = '$date', `level` = '$level',`guestlect_file`='$uploader', `guestlect_user_id` = '$glorg' WHERE `guestlect`.`guestlect_id` = '$UpId';";
+            if ($mysqli->query($sql) == true) {
+                echo '<script>history.back()</script>';
+
+                alert("success");
+            } else {
+                // failed 
+                echo '<script>history.back()</script>';
+
+                alert("unsuccessful");
+            }
+        }
     }
-} else{
-    $sql="UPDATE `guestlect` SET `glorg` = '$glorg', `glname` = '$glname', `date` = '$date', `level` = '$level', `guestlect_user_id` = '$glorg' WHERE `guestlect`.`guestlect_id` = '$UpId';";
-    if ($mysqli->query($sql) == true) {
-        echo '<script>history.back()</script>';
-
-        alert("success");
-    } else {
-        // failed 
-        echo '<script>history.back()</script>';
-
-        alert("unsuccessful");
-    }
-}
 }
 ?>
 <!doctype html>
@@ -93,7 +147,7 @@ if ($_SERVER['REQUEST_METHOD']   == 'POST') {
     <div class="box">
         <h1>Guest Lecture Organised By</h1>
     </div>
-    <form action="" method="post">
+    <form action="" method="post" enctype="multipart/form-data">
 
         <div class="wrapper">
             <div style="height: 490px" class="container">
@@ -107,13 +161,13 @@ if ($_SERVER['REQUEST_METHOD']   == 'POST') {
                         <select class="form-control" name="glorg">
                             <option disabled selected value="def">Select Faculty</option>
                             <?php
-                             while ($users = mysqli_fetch_assoc($users_q)) {
+                            while ($users = mysqli_fetch_assoc($users_q)) {
 
-                                ?>
-                                    <option value="<?php echo $users['user_id'] ?>" <?php echo $glorgVal == $users['user_id'] ? 'selected' : '' ?>><?php echo $users['username'] ?> </option>
-                                <?php
-    
-                                }
+                            ?>
+                                <option value="<?php echo $users['user_id'] ?>" <?php echo $glorgVal == $users['user_id'] ? 'selected' : '' ?>><?php echo $users['username'] ?> </option>
+                            <?php
+
+                            }
                             ?>
                         </select>
                     <?php
@@ -122,19 +176,30 @@ if ($_SERVER['REQUEST_METHOD']   == 'POST') {
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Topic Name :</label>
-                    <input type="text" value="<?php echo $glname ?>"class="form-control" name="glname" placeholder="Topic Name">
+                    <input type="text" value="<?php echo $glname ?>" class="form-control" name="glname" placeholder="Topic Name">
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Date :</label><br>
-                    <input type="date" value="<?php echo $date ?>"class="form-control" name="date">
+                    <input type="date" value="<?php echo $date ?>" class="form-control" name="date">
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Class :</label>
                     <select class="form-control" name="level">
-                        <option <?php echo $level=="SE"?"selected":"" ?> value="SE">SE</option>
-                        <option <?php echo $level=="TE"?"selected":"" ?> value="TE">TE</option>
-                        <option <?php echo $level=="BE"?"selected":"" ?> value="BE">BE</option>
+                        <option <?php echo $level == "SE" ? "selected" : "" ?> value="SE">SE</option>
+                        <option <?php echo $level == "TE" ? "selected" : "" ?> value="TE">TE</option>
+                        <option <?php echo $level == "BE" ? "selected" : "" ?> value="BE">BE</option>
                     </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Guest lecture Document (only pdf,ppt,Word file) :</label>
+                    <input type="file" class="form-control file" name="file" placeholder="FDP Files">
+                    <?php
+                    if ($file != "") {
+                    ?>
+                        <a href="<?php echo $file  ?>" target="_blank" class="btn btn-primary">Show file</a>
+                    <?php
+                    }
+                    ?>
                 </div>
                 <div class="mb-3">
                     <div class="cont-1">
