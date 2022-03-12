@@ -46,6 +46,7 @@ $query = mysqli_query($mysqli, $sql);
           <th scope="col">Description</th>
           <th scope="col">Submitted By</th>
           <th scope="col">Edit</th>
+          <th scope="col">Delete</th>
         </tr>
       </thead>
       <tbody class="table-light">
@@ -63,6 +64,7 @@ $query = mysqli_query($mysqli, $sql);
             <td><?php echo $row['description'] ?></td>
             <td><?php echo get_Added_Name($row['iv_added_by']); ?></td>
             <td><a href="<?php echo "IV.php?up_id=".$row['iv_id'] ?>">Edit</a></td>
+            <td><a href="<?php echo "delete/iv_del_.php?id=".$row['iv_id'] ?>">Delete</a></td>
 
           </tr>
         <?php

@@ -46,6 +46,7 @@ $query = mysqli_query($mysqli, $sql);
           <th scope="col">Level</th>
           <th scope="col">Added By</th>
           <th scope="col">Edit</th>
+          <th scope="col">Delete</th>
         </tr>
       </thead>
       <tbody class="table-light">
@@ -63,6 +64,7 @@ $query = mysqli_query($mysqli, $sql);
            <td><?php echo $row['level'] ?></td>
            <td><?php echo get_Added_Name($row['fdpatt_added_by']); ?></td>
            <td><a href="<?php echo "FDP_Attended.php?up_id=".$row['fdpatt_id'] ?>">Edit</a></td>
+           <td><a href="<?php echo "delete/fdpatt_del_.php?id=".$row['fdpatt_id'] ?>">Delete</a></td>
 
           </tr>
         <?php

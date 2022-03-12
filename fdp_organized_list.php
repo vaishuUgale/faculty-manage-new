@@ -46,6 +46,7 @@ $query = mysqli_query($mysqli, $sql);
           <th scope="col">Level</th>
           <th scope="col">Added By</th>
           <th scope="col">Edit</th>
+          <th scope="col">Delete</th>
         </tr>
       </thead>
       <tbody class="table-light">
@@ -63,6 +64,7 @@ $query = mysqli_query($mysqli, $sql);
             <td><?php echo $row['level'] ?></td>
             <td><?php echo get_Added_Name($row['fdporg_added_by']) ?></td>
             <td><a href="<?php echo "FDP_Organized.php?up_id=".$row['fdporg_id'] ?>">Edit</a></td>
+            <td><a href="<?php echo "delete/fdpcon_del_.php?id=".$row['fdporg_id'] ?>">Delete</a></td>
 
           </tr>
         <?php
