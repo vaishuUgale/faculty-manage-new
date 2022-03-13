@@ -66,6 +66,8 @@ if ($_SERVER['REQUEST_METHOD']   == 'POST') {
 
                 genID($last_id, 'guestlect', 'guestlect_id', 'guestlect');
                 alert("success");
+                echo '<script>history.back()</script>';
+
             } else {
                 // failed 
 
@@ -83,9 +85,11 @@ if ($_SERVER['REQUEST_METHOD']   == 'POST') {
 
                     genID($last_id, 'guestlect', 'guestlect_id', 'guestlect');
                     alert("success");
+                    echo '<script>history.back()</script>';
+
                 } else {
                     // failed 
-                    echo $sql;
+                  
                     alert("unsuccessful");
                 }
             } else {
@@ -148,7 +152,7 @@ if ($_SERVER['REQUEST_METHOD']   == 'POST') {
     <form action="" method="post" enctype="multipart/form-data">
 
         <div class="wrapper">
-            <div style="height: 490px" class="container">
+            <div class="container">
                 <div class="mb-3">
                     <?php
                     if ($_SESSION['role'] == 'admin') {

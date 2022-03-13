@@ -78,6 +78,7 @@ if ($_SERVER['REQUEST_METHOD']   == 'POST') {
                 $last_id = $mysqli->insert_id;
                 genID($last_id, "fdpatt", "fdpatt_id", "FDPAttended");
                 alert("success");
+                echo "<script>window.location.href='./FDP_Attended.php'</script>";
                 // echo '<script>history.back()</script>';
             } else {
                 // failed 
