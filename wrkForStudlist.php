@@ -31,6 +31,7 @@ $query = mysqli_query($mysqli, $sql);
 </head>
 
 <body>
+<?php include('./nav.php') ?>  
   <div class="box">
     <h1>My Workshop For Student Report</h1>
   </div>

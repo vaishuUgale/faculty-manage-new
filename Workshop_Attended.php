@@ -150,9 +150,7 @@ if ($_SERVER['REQUEST_METHOD']   == 'POST') {
 </head>
 
 <body>
-    <!-- <div class="container1">
-        <img src="sinhgad-logo-colour-1.png" alt=""> 
-    </div> -->
+<?php include('./nav.php') ?>  
     <div class="box">
         <h1>Workshop Attended</h1>
     </div>
