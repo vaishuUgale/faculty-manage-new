@@ -53,6 +53,7 @@ $query = mysqli_query($mysqli, $sql);
           <th scope="col">File</th>
           <th scope="col">Edit</th>
 
+          <th scope="col">Delete</th>
         </tr>
       </thead>
       <tbody class="table-light">
@@ -72,6 +73,7 @@ $query = mysqli_query($mysqli, $sql);
             <td><a <?php echo $row['guestlect_file']!=null?"href='".$row['guestlect_file']."'":'' ?> target="_blank"><?php echo $row['guestlect_file']!=null?'Go to file':'No file' ?></a></td>
 
             <td><a href="<?php echo "GuestLect.php?up_id=".$row['guestlect_id'] ?>">Edit</a></td>
+            <td><a href="<?php echo "delete/guestlec_del_.php?id=".$row['guestlect_id'] ?>">Delete</a></td>
 
           </tr>
         <?php

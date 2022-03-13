@@ -51,6 +51,7 @@ $query = mysqli_query($mysqli, $sql);
           <th scope="col">Added By</th>
           <th scope="col">File</th>
           <th scope="col">Edit</th>
+          <th scope="col">Delete</th>
         </tr>
       </thead>
       <tbody class="table-light">
@@ -69,6 +70,7 @@ $query = mysqli_query($mysqli, $sql);
             <td><?php echo get_Added_Name($row['fdporg_added_by']) ?></td>
             <td><a <?php echo $row['fdporg_file']!=null?"href='".$row['fdporg_file']."'":'' ?> target="_blank"><?php echo $row['fdporg_file']!=null?'Go to file':'No file' ?></a></td>
             <td><a href="<?php echo "FDP_Organized.php?up_id=".$row['fdporg_id'] ?>">Edit</a></td>
+            <td><a href="<?php echo "delete/fdpcon_del_.php?id=".$row['fdporg_id'] ?>">Delete</a></td>
 
           </tr>
         <?php

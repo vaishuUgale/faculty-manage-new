@@ -52,6 +52,7 @@ $query = mysqli_query($mysqli, $sql);
           <th scope="col">Added By</th>
           <th scope="col">File</th>
           <th scope="col">Edit</th>
+          <th scope="col">Delete</th>
         </tr>
       </thead>
       <tbody class="table-light">
@@ -71,6 +72,7 @@ $query = mysqli_query($mysqli, $sql);
            <td><a <?php echo $row['wsatt_file']!=null?"href='".$row['wsatt_file']."'":'' ?> target="_blank"><?php echo $row['wsatt_file']!=null?'Go to file':'No file' ?></a></td>
 
            <td><a href="<?php echo "Workshop_Attended.php?up_id=".$row['wsatt_id'] ?>">Edit</a></td>
+           <td><a href="<?php echo "delete/wrkatt_del_.php?id=".$row['wsatt_id'] ?>">Delete</a></td>
 
           </tr>
         <?php

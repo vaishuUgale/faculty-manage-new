@@ -52,6 +52,7 @@ $query = mysqli_query($mysqli, $sql);
           <th scope="col">Added By</th>
           <th scope="col">File</th>
           <th scope="col">Edit</th>
+          <th scope="col">Delete</th>
         </tr>
       </thead>
       <tbody class="table-light">
@@ -70,6 +71,7 @@ $query = mysqli_query($mysqli, $sql);
            <td><?php echo get_Added_Name($row['fdpatt_added_by']); ?></td>
            <td><a <?php echo $row['fdpatt_file']!=null?"href='".$row['fdpatt_file']."'":'' ?> target="_blank"><?php echo $row['fdpatt_file']!=null?'Go to file':'No file' ?></a></td>
            <td><a href="<?php echo "FDP_Attended.php?up_id=".$row['fdpatt_id'] ?>">Edit</a></td>
+           <td><a href="<?php echo "delete/fdpatt_del_.php?id=".$row['fdpatt_id'] ?>">Delete</a></td>
 
           </tr>
         <?php

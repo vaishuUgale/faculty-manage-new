@@ -52,6 +52,7 @@ $query = mysqli_query($mysqli, $sql);
           <th scope="col">Added By</th>
           <th scope="col">File</th>
           <th scope="col">Edit</th>
+          <th scope="col">Delete</th>
         </tr>
       </thead>
       <tbody class="table-light">
@@ -70,6 +71,7 @@ $query = mysqli_query($mysqli, $sql);
            <td><?php echo get_Added_Name($row['wsorgfstud_added_by']); ?></td>
            <td><a <?php echo $row['wsorgfstud_file']!=null?"href='".$row['wsorgfstud_file']."'":'' ?> target="_blank"><?php echo $row['wsorgfstud_file']!=null?'Go to file':'No file' ?></a></td>
            <td><a href="<?php echo "WorkshopForStudent.php?up_id=".$row['wsorgfstud_id'] ?>">Edit</a></td>
+           <td><a href="<?php echo "delete/wrkForstud_del_.php?id=".$row['wsorgfstud_id'] ?>">Delete</a></td>
 
           </tr>
         <?php

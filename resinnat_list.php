@@ -54,6 +54,7 @@ $query = mysqli_query($mysqli, $sql);
           <th scope="col">DOI</th>
           <th scope="col">Submitted By</th>
           <th scope="col">Edit</th>
+          <th scope="col">Delete</th>
         </tr>
       </thead>
       <tbody class="table-light">
@@ -74,6 +75,7 @@ $query = mysqli_query($mysqli, $sql);
             <td><?php echo $row['DOI'] ?></td>
             <td><?php echo get_Added_Name($row['inpaperpublication_user_id']); ?></td>
             <td><a href="<?php echo "IPP.php?up_id=".$row['inpaperpublication_id'] ?>">Edit</a></td>
+            <td><a href="<?php echo "delete/resinnat_del_.php?id=".$row['inpaperpublication_id'] ?>">Delete</a></td>
 
           </tr>
         <?php
