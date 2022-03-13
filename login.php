@@ -66,7 +66,7 @@ if( $num_row ==1 )
             </div>
             <div class="mb-3">
                 <label class="form-label">Password* :</label>
-                <input type="text" class="form-control" name= "password" placeholder="Password">
+                <input type="password" class="form-control" name= "password" placeholder="Password">
             </div>
             <div class="mb-3">
                 <a href="form.php"> Registration </a>
