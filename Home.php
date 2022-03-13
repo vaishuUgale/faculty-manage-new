@@ -2,6 +2,8 @@
 session_start();
 if (!isset($_SESSION['username'])) {
     echo '<script>window.location.href="login.php"</script>';
+} else {
+    $isAdmin = $_SESSION['role'] == 'admin' ? true : false;
 }
 
 ?>
@@ -172,7 +174,7 @@ if (!isset($_SESSION['username'])) {
                         </div>
                     </a>
                 </div>
-              
+
                 <div class="box">
                     <a href="./wrkForStudlist.php">
                         <div class="icons">
@@ -189,7 +191,7 @@ if (!isset($_SESSION['username'])) {
                             <img src="table (1).png" alt="">
                         </div>
                         <div class="icons">
-                            <p>Workshop Organised  List</p>
+                            <p>Workshop Organised List</p>
                         </div>
                     </a>
                 </div>
@@ -275,43 +277,176 @@ if (!isset($_SESSION['username'])) {
         </div>
     </div>
 
-    <div class="main">
+  
+    <?php
+    if ($isAdmin) {
+    ?>
+        <div class="main">
+            <div class="content">
+                <h2>Admin List</h2>
+            </div>
+            <div class="main1">
+                <div class="allboxes">
+                    <div class="box">
+                        <a href="./fdp_attended_list.php?admin=true">
+
+                            <div class="icons">
+                                <img src="table (1).png" alt="">
+                            </div>
+                            <div class="icons">
+                                <p>FDP Attended List</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="box">
+                        <a href="./fdp_organized_list.php?admin=true">
+                            <div class="icons">
+                                <img src="table (1).png" alt="">
+                            </div>
+                            <div class="icons">
+                                <p>FDP Organised List</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="box">
+                        <a href="./resnat_list.php?admin=true">
+                            <div class="icons">
+                                <img src="table (1).png" alt="">
+                            </div>
+                            <div class="icons">
+                                <p>National List</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="box">
+                        <a href="./resinnat_list.php?admin=true">
+                            <div class="icons">
+                                <img src="table (1).png" alt="">
+                            </div>
+                            <div class="icons">
+                                <p>International List</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main">
+
+            <div class="main1">
+                <div class="allboxes">
+                    <div class="box">
+                        <a href="./wrkattendlist.php?admin=true">
+                            <div class="icons">
+                                <img src="table (1).png" alt="">
+                            </div>
+                            <div class="icons">
+                                <p>Workshop Attended List</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="box">
+                        <a href="./wrkForStudlist.php?admin=true">
+                            <div class="icons">
+                                <img src="table (1).png" alt="">
+                            </div>
+                            <div class="icons">
+                                <p>Workshop Student List</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="box">
+                        <a href="./wrkForStafflist.php?admin=true">
+                            <div class="icons">
+                                <img src="table (1).png" alt="">
+                            </div>
+                            <div class="icons">
+                                <p>Workshop Organised List</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="box">
+                        <a href="./conference_list.php?admin=true">
+                            <div class="icons">
+                                <img src="table (1).png" alt="">
+                            </div>
+                            <div class="icons">
+                                <p>Conference attendence List</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main">
+
+            <div class="main1">
+                <div class="allboxes">
+                    <div class="box">
+                        <a href="./Guest_lec_list.php?admin=true">
+                            <div class="icons">
+                                <img src="table (1).png" alt="">
+                            </div>
+                            <div class="icons">
+                                <p>Guest Lecture List</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="box">
+                        <a href="./IV_list.php?admin=true">
+                            <div class="icons">
+                                <img src="table (1).png" alt="">
+                            </div>
+                            <div class="icons">
+                                <p>Industrial Visit List</p>
+                            </div>
+                        </a>
+                    </div>
+               
+                </div>
+            </div>
+        </div>
+
+    <?php
+    }
+    ?>
+  <div class="main">
         <div class="content">
-            <h2>Display</h2>
+            <h2>Options</h2>
         </div>
         <div class="main1">
             <div class="allboxes">
-                <div class="box">
-                    <div class="icons">
-                        <img src="table (1).png" alt="">
+
+                <?php
+                if ($isAdmin) {
+                ?>
+                    <div class="box">
+                        <a href="./admin_reg.php">
+                            <div class="icons">
+                                <img src="lecture.png" alt="">
+                            </div>
+                            <div class="icons">
+                                <p>Add Admin</p>
+                            </div>
+                        </a>
                     </div>
-                    <div class="icons">
-                        <p>Individual</p>
-                    </div>
-                </div>
-                <div class="box">
-                    <div class="icons">
-                        <img src="table (1).png" alt="">
-                    </div>
-                    <div class="icons">
-                        <p>All Staff</p>
-                    </div>
-                </div>
-                <div class="box">
+                <?php
+                }
+                ?> <div class="box">
                     <a href="./signout.php">
-                    <div class="icons">
-                        <img src="table (1).png" alt="">
-                    </div>
-                    <div class="icons">
-                        <p>Signout</p>
-                    </div>
+                        <div class="icons">
+                            <img src="table (1).png" alt="">
+                        </div>
+                        <div class="icons">
+                            <p>Signout</p>
+                        </div>
                     </a>
                 </div>
-
-
-
-
-
+            </div>
+        </div>
+    </div>
 
 </body>
 

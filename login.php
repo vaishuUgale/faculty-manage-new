@@ -2,7 +2,9 @@
   
 session_start();
 echo '<pre>' . print_r($_SESSION, TRUE) . '</pre>';
-
+if (isset($_SESSION['username'])) {
+    echo '<script>window.location.href="home.php"</script>';
+}
 $mysqli = new mysqli('localhost','root' ,'', 'accounts' );
 if(isset($_POST['Submit']))
 {
