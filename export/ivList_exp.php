@@ -20,7 +20,7 @@ $user_id = $_SESSION['user_id'];
 $fileName = "IndustrialVisitList_".$user_id . date('Y-m-d') . ".xls";
 
 // Column names 
-$fields = array('Industrial Visit ID','Organiser', 'Place', 'Date', 'Level','Description', 'FDP File Name', 'Industrail Visit User', 'Added By');
+$fields = array('Industrial Visit ID','Organiser', 'Place', 'Date', 'Level','Description', 'Industrial visit File Name', 'Industrail Visit User', 'Added By');
 
 // Display column names as first row 
 $excelData = implode("\t", array_values($fields)) . "\n";
@@ -37,7 +37,7 @@ $query = $mysqli->query($sql);
 if ($query->num_rows > 0) {
     // Output each row of the data 
     while ($row = $query->fetch_assoc()) {
-        $lineData = array($row['iv_id'],$row['ivorg'], $row['Place'], $row['date'], $row['level'],$row['description'], get_Added_Name($row['iv_user_id']), get_Added_Name($row['iv_added_by']));
+        $lineData = array($row['iv_id'],$row['ivorg'], $row['Place'], $row['date'], $row['level'],$row['description'],$row['iv_file'], get_Added_Name($row['iv_user_id']), get_Added_Name($row['iv_added_by']));
         array_walk($lineData, 'filterData');
         $excelData .= implode("\t", array_values($lineData)) . "\n";
     }

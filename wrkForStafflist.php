@@ -6,11 +6,12 @@ if (!isset($_SESSION['username'])) {
 include './conn.php';
 include './functions.php';
 $user_id = $_SESSION['user_id'];
-
+$link="";
 $sql = "SELECT * FROM `wsorg` WHERE wsorg_user_id='$user_id'";
 if (isset($_GET['admin'])) {
   if($_SESSION['role']=='admin') {
   $sql="SELECT * FROM `wsorg`";
+  $link="?admin=true";
   }
 }
 $query = mysqli_query($mysqli, $sql);
@@ -36,6 +37,9 @@ $query = mysqli_query($mysqli, $sql);
     <h1>My Workshop Organised Report</h1>
   </div>
   <div class="container">
+  <div class="btn_container d-flex justify-content-end">
+    <a href="./export/wrk_staff_exp.php<?php echo $link ?>" class="btn btn-primary"><i class="fa fa-cloud-download" aria-hidden="true"></i> Export</a>
+    </div>
     <table class="table table-hover">
       <thead>
         <tr>

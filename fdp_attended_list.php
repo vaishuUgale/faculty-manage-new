@@ -6,11 +6,12 @@ if (!isset($_SESSION['username'])) {
 include './conn.php';
 include './functions.php';
 $user_id = $_SESSION['user_id'];
-
+$link="";
 $sql = "SELECT * FROM `fdpatt` WHERE fdpatt_user_id='$user_id'";
 if (isset($_GET['admin'])) {
   if($_SESSION['role']=='admin') {
   $sql="SELECT * FROM `fdpatt`";
+  $link="?admin=true";
   }
 }
 $query = mysqli_query($mysqli, $sql);
@@ -36,6 +37,9 @@ $query = mysqli_query($mysqli, $sql);
     <h1>My Fdp Attendance Report</h1>
   </div>
   <div class="container">
+    <div class="btn_container d-flex justify-content-end">
+    <a href="./export/fdpatt_list_exp.php<?php echo $link ?>" class="btn btn-primary"><i class="fa fa-cloud-download" aria-hidden="true"></i> Export</a>
+    </div>
     <table class="table table-hover">
       <thead>
         <tr>
@@ -78,7 +82,7 @@ $query = mysqli_query($mysqli, $sql);
   </div>
 
   <!-- Optional JavaScript; choose one of the two! -->
-
+  <script src="https://kit.fontawesome.com/dc7c5d3095.js" crossorigin="anonymous"></script>
   <!-- Option 1: Bootstrap Bundle with Popper -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 

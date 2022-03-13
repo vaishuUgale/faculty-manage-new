@@ -155,7 +155,7 @@ if ($_SERVER['REQUEST_METHOD']   == 'POST') {
     <form action="" method="post" enctype="multipart/form-data">
 
         <div class="wrapper">
-            <div style="height: 570px" class="container">
+            <div class="container">
                 <div class="mb-3">
                     <?php
                     if ($_SESSION['role'] == 'admin') {

@@ -20,7 +20,7 @@ $user_id = $_SESSION['user_id'];
 $fileName = "WorkshopForStudentList_".$user_id . date('Y-m-d') . ".xls";
 
 // Column names 
-$fields = array('Workshop ID','Organiser', 'Workshop Name','Start Date', 'End date', 'Level', 'File Name', 'Attendee User', 'Added By');
+$fields = array('Workshop ID','Organiser', 'Workshop Name','Start Date', 'End date', 'Level', 'Workshop student File Name', 'Attendee User', 'Added By');
 
 // Display column names as first row 
 $excelData = implode("\t", array_values($fields)) . "\n";
@@ -37,7 +37,7 @@ $query = $mysqli->query($sql);
 if ($query->num_rows > 0) {
     // Output each row of the data 
     while ($row = $query->fetch_assoc()) {
-        $lineData = array($row['wsorgfstud_id'],$row['workshoporg'],$row['workshopname'], $row['fromdate'], $row['todate'], $row['level'], get_Added_Name($row['wsorgfstud_user_id']), get_Added_Name($row['wsorgfstud_added_by']));
+        $lineData = array($row['wsorgfstud_id'],$row['workshoporg'],$row['workshopname'], $row['fromdate'], $row['todate'], $row['level'], $row['wsorgfstud_file'], get_Added_Name($row['wsorgfstud_user_id']), get_Added_Name($row['wsorgfstud_added_by']));
         array_walk($lineData, 'filterData');
         $excelData .= implode("\t", array_values($lineData)) . "\n";
     }

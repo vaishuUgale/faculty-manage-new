@@ -20,7 +20,7 @@ $user_id = $_SESSION['user_id'];
 $fileName = "InternationalResearchPaperList_".$user_id . date('Y-m-d') . ".xls";
 
 // Column names 
-$fields = array('International Paper ID','Author1', 'Author2', 'Paper Title', 'Journal Name','DOP','Volume','Page no','DOI', 'FDP File Name', 'International Research Paper User', 'Added By');
+$fields = array('International Paper ID','Author1', 'Author2', 'Paper Title', 'Journal Name','DOP','Volume','Page no','DOI','International Research Paper User', 'Added By');
 
 // Display column names as first row 
 $excelData = implode("\t", array_values($fields)) . "\n";

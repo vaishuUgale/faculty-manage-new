@@ -37,7 +37,7 @@ $query = $mysqli->query($sql);
 if ($query->num_rows > 0) {
     // Output each row of the data 
     while ($row = $query->fetch_assoc()) {
-        $lineData = array($row['fdpatt_id'],$row['FDPAttended'], $row['fdpname'], $row['fromdate'], $row['todate'], $row['level'], get_Added_Name($row['fdpatt_user_id']), get_Added_Name($row['fdpatt_added_by']));
+        $lineData = array($row['fdpatt_id'],$row['FDPAttended'], $row['fdpname'], $row['fromdate'], $row['todate'], $row['level'], $row['fdpatt_file'], get_Added_Name($row['fdpatt_user_id']), get_Added_Name($row['fdpatt_added_by']));
         array_walk($lineData, 'filterData');
         $excelData .= implode("\t", array_values($lineData)) . "\n";
     }
