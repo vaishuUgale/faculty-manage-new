@@ -75,13 +75,13 @@ if ($_SERVER['REQUEST_METHOD']   == 'POST') {
                 <input type="text" class="form-control" name= "username" placeholder="Full Name">
             </div>
             <div class="mb-3">
-                <input type="text" class="form-control" name= "email" placeholder="Email">
+                <input type="email" class="form-control" name= "email" placeholder="Email">
             </div>
             <div class="mb-3">
-                <input type="text" class="form-control" name= "password" placeholder="Password" autocomplete="new-password">
+                <input type="password" class="form-control" name= "password" placeholder="Password" autocomplete="new-password">
             </div>
             <div class="mb-3">
-                <input type="text" class="form-control" name= "confirmpassword" placeholder="Confirm Password" autocomplete="new-password">
+                <input type="password" class="form-control" name= "confirmpassword" placeholder="Confirm Password" autocomplete="new-password">
             </div>
             <div class="mb-3">
                 <div class="cont-1">
