@@ -32,6 +32,7 @@ $query = mysqli_query($mysqli, $sql);
 </head>
 
 <body>
+<?php include('./nav.php') ?>  
   <div class="box">
     <h1>My Fdp Organised Report</h1>
   </div>
