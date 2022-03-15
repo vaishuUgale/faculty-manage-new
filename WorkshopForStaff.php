@@ -78,6 +78,7 @@ if ($_SERVER['REQUEST_METHOD']   == 'POST') {
 
                 genID($last_id, 'wsorg', 'wsorg_id', 'wsorg');
                 alert("success");
+                echo '<script>history.back()</script>';
             } else {
                 // failed 
 
@@ -96,6 +97,7 @@ if ($_SERVER['REQUEST_METHOD']   == 'POST') {
 
                     genID($last_id, 'wsorg', 'wsorg_id', 'wsorg');
                     alert("success");
+                    echo '<script>history.back()</script>';
                 } else {
                     // failed 
 

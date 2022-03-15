@@ -75,6 +75,7 @@ if ($_SERVER['REQUEST_METHOD']   == 'POST') {
 
             genID($last_id, 'inpaperpublication', 'inpaperpublication_id', 'inpaper');
             alert("success");
+            echo '<script>history.back()</script>';
         } else {
             // failed 
 

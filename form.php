@@ -28,6 +28,7 @@ if ($_SERVER['REQUEST_METHOD']   == 'POST') {
 
         genID($last_id, "users", "user_id", "users");
         alert("Faculty is registered Successfully");
+        echo "<script>window.location.href = 'login.php'</script>";
       } else {
         // failed 
 
